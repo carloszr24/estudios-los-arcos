@@ -8,16 +8,28 @@ const BOOKING_AVAILABILITY_ANCHOR = "group_recommendation";
 const BOOKING_DEST_ID = "-404164";
 const TERUEL_SLIDES = [
   {
-    src: "https://images.unsplash.com/photo-1516307365426-bea591f05011?w=2200&q=80",
-    alt: "Paisaje de Teruel al atardecer",
+    src: "/images/teruel-carrusel-1.jpg",
+    alt: "Teruel carrusel 1",
   },
   {
-    src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=2200&q=80",
-    alt: "Montañas y naturaleza en Teruel",
+    src: "/images/teruel-carrusel-2.jpg",
+    alt: "Teruel carrusel 2",
   },
   {
-    src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=2200&q=80",
-    alt: "Ruta natural por el entorno de Teruel",
+    src: "/images/teruel-carrusel-3.jpg",
+    alt: "Teruel carrusel 3",
+  },
+  {
+    src: "/images/teruel-carrusel-4.jpg",
+    alt: "Teruel carrusel 4",
+  },
+  {
+    src: "/images/teruel-carrusel-5.jpg",
+    alt: "Teruel carrusel 5",
+  },
+  {
+    src: "/images/teruel-carrusel-6.jpg",
+    alt: "Teruel carrusel 6",
   },
 ];
 const REVIEWS = [
