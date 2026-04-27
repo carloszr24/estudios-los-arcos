@@ -516,11 +516,12 @@ nav {
   text-align: left;
 }
 
-.booking-rating-brand {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+.booking-logo {
+  width: auto;
+  height: 20px;
+  object-fit: contain;
   margin-bottom: 14px;
+  filter: brightness(0) invert(1);
 }
 
 .booking-rating-row {
@@ -580,6 +581,7 @@ nav {
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
+  padding-right: 48px;
 }
 
 .review-badge {
@@ -594,16 +596,12 @@ nav {
   color: #333;
 }
 
-.review-score {
-  font-size: 12px;
-  color: #666;
-}
-
 .review-text {
   font-size: 13px;
   line-height: 1.7;
   color: #444;
   margin-bottom: 16px;
+  padding-right: 48px;
 }
 
 .review-author {
@@ -629,7 +627,7 @@ nav {
 .review-controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 12px;
 }
 
@@ -643,6 +641,12 @@ nav {
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.review-nav-btn:hover {
+  background: #f5f5f5;
+  border-color: #cfcfcf;
 }
 
 .review-dots {
@@ -901,8 +905,7 @@ nav {
   }
 
   .review-meta {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 }
 
@@ -913,6 +916,13 @@ nav {
 
   .brand-logo {
     height: 56px;
+  }
+
+  .review-score-image {
+    width: 32px;
+    height: 32px;
+    top: 12px;
+    right: 12px;
   }
 
   .hero-left,

@@ -517,7 +517,13 @@ export default function Home() {
           </div>
           <div className="resenas-grid reveal">
             <div className="rating-big booking-rating">
-              <div className="booking-rating-brand">Booking.com</div>
+              <Image
+                src="/images/booking-logo.png"
+                alt="Booking.com"
+                width={130}
+                height={22}
+                className="booking-logo"
+              />
               <div className="booking-rating-row">
                 <div className="rating-big-num">8,5</div>
                 <div>
@@ -536,7 +542,6 @@ export default function Home() {
                   <article className="review-card" key={`${review.author}-${review.date}-${index}`}>
                     <div className="review-meta">
                       <span className="review-badge">{review.title}</span>
-                      <span className="review-score">Puntuación: {review.score}</span>
                     </div>
                     <p className="review-text">{review.text}</p>
                     <div className="review-author">
