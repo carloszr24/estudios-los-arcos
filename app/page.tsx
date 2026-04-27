@@ -6,6 +6,20 @@ import { useEffect, useRef, useState } from "react";
 const BOOKING_HOTEL_URL = "https://www.booking.com/hotel/es/estudios-los-arcos.es.html";
 const BOOKING_AVAILABILITY_ANCHOR = "group_recommendation";
 const BOOKING_DEST_ID = "-404164";
+const TERUEL_SLIDES = [
+  {
+    src: "https://images.unsplash.com/photo-1516307365426-bea591f05011?w=2200&q=80",
+    alt: "Paisaje de Teruel al atardecer",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=2200&q=80",
+    alt: "Montañas y naturaleza en Teruel",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=2200&q=80",
+    alt: "Ruta natural por el entorno de Teruel",
+  },
+];
 const REVIEWS = [
   {
     author: "Xsanz",
@@ -89,6 +103,7 @@ export default function Home() {
   const [reviewIndex, setReviewIndex] = useState(REVIEWS.length);
   const [reviewTransition, setReviewTransition] = useState(true);
   const [cardsPerView, setCardsPerView] = useState(2);
+  const [teruelSlideIndex, setTeruelSlideIndex] = useState(0);
   const guestsPanelRef = useRef<HTMLDivElement>(null);
   const carouselReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
 
@@ -150,6 +165,13 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      setTeruelSlideIndex((current) => (current + 1) % TERUEL_SLIDES.length);
+    }, 5500);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
     const onResize = () => {
       setCardsPerView(window.innerWidth < 900 ? 1 : 2);
     };
@@ -181,6 +203,14 @@ export default function Home() {
       setReviewTransition(false);
       setReviewIndex(REVIEWS.length * 2 - 1);
     }
+  };
+
+  const goToPrevTeruelSlide = () => {
+    setTeruelSlideIndex((current) => (current - 1 + TERUEL_SLIDES.length) % TERUEL_SLIDES.length);
+  };
+
+  const goToNextTeruelSlide = () => {
+    setTeruelSlideIndex((current) => (current + 1) % TERUEL_SLIDES.length);
   };
 
   return (
@@ -391,24 +421,29 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="entorno-section">
-        <div className="entorno-inner reveal">
-          <div className="entorno-text">
-            <p className="section-eyebrow">Entorno</p>
-            <h2 className="section-title">Descubre Teruel</h2>
-            <p>
-              Naturaleza, historia y cultura te esperan. Disfruta del senderismo, la nieve en invierno y del encanto de una
-              ciudad con patrimonio único.
-            </p>
-            <div className="entorno-tags">
-              <span>Senderismo</span>
-              <span>Naturaleza</span>
-              <span>Esquí</span>
-              <span>Centro histórico</span>
+      <section className="teruel-carousel-section" id="galeria" aria-label="Carrusel de Teruel">
+        <div className="teruel-carousel-track">
+          {TERUEL_SLIDES.map((slide, index) => (
+            <div key={slide.src} className={`teruel-slide ${index === teruelSlideIndex ? "is-active" : ""}`}>
+              <img src={slide.src} alt={slide.alt} />
             </div>
-          </div>
-          <div className="entorno-image">
-            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80" alt="Entorno de Teruel" />
+          ))}
+          <button type="button" className="teruel-nav teruel-nav-prev" onClick={goToPrevTeruelSlide} aria-label="Imagen anterior">
+            ‹
+          </button>
+          <button type="button" className="teruel-nav teruel-nav-next" onClick={goToNextTeruelSlide} aria-label="Imagen siguiente">
+            ›
+          </button>
+          <div className="teruel-dots">
+            {TERUEL_SLIDES.map((slide, index) => (
+              <button
+                key={slide.alt}
+                type="button"
+                className={`teruel-dot ${index === teruelSlideIndex ? "active" : ""}`}
+                onClick={() => setTeruelSlideIndex(index)}
+                aria-label={`Ir a imagen ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </section>
