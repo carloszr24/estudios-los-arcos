@@ -223,15 +223,7 @@ export default function Home() {
 
       <section className="hero">
         <div className="hero-left">
-          <h1 className="hero-title">
-            Estudios
-            <br />
-            Los Arcos
-          </h1>
-          <p className="hero-sub">Apartamentos en Teruel</p>
-          <div className="hero-tags">
-            Cocina equipada <span>-</span> WiFi gratis <span>-</span> 10 min del centro
-          </div>
+          <h1 className="hero-title">Teruel desde otro punto de vista</h1>
           <form className="booking-form" onSubmit={handleBookingSubmit}>
             <input type="hidden" name="lang" value="es" />
             <input type="hidden" name="selected_currency" value="EUR" />
@@ -313,57 +305,6 @@ export default function Home() {
             src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80"
             alt="Apartamento Estudios Los Arcos"
           />
-        </div>
-      </section>
-
-      <div className="value-bar">
-        <div className="vb-item">
-          <div className="vb-text">
-            A 10 min
-            <small>del centro</small>
-          </div>
-        </div>
-        <div className="vb-item">
-          <div className="vb-text">
-            Cocina
-            <small>equipada</small>
-          </div>
-        </div>
-        <div className="vb-item">
-          <div className="vb-text">
-            WiFi
-            <small>gratis</small>
-          </div>
-        </div>
-        <div className="vb-item">
-          <div className="vb-text">
-            Habitaciones
-            <small>familiares</small>
-          </div>
-        </div>
-      </div>
-
-      <section className="intro-wrap">
-        <div className="intro reveal">
-          <div className="intro-text">
-            <p className="intro-eyebrow">Estudios funcionales</p>
-            <h2 className="intro-title">
-              Tu alojamiento practico
-              <br />
-              en Teruel
-            </h2>
-            <p>
-              Estudios Los Arcos ofrece apartamentos funcionales con cocina equipada y todo lo necesario para que
-              disfrutes de una estancia comoda y sin complicaciones.
-            </p>
-            <p>Ideales para viajes en pareja, en familia o por trabajo.</p>
-            <a href="#alojamientos" className="btn-dark">
-              Saber más
-            </a>
-          </div>
-          <div className="intro-img reveal d2">
-            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80" alt="Interior apartamento" />
-          </div>
         </div>
       </section>
 

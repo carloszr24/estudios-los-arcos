@@ -102,25 +102,6 @@ nav {
   margin-bottom: 12px;
 }
 
-.hero-sub {
-  font-size: 18px;
-  color: #444;
-  margin-bottom: 12px;
-}
-
-.hero-tags {
-  display: flex;
-  gap: 0;
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 36px;
-}
-
-.hero-tags span {
-  margin: 0 8px;
-  color: #bbb;
-}
-
 .booking-form {
   background: #fff;
   border: 1px solid #ddd;
@@ -275,56 +256,11 @@ nav {
 }
 
 .hero-right img,
-.intro-img img,
 .card-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
-.value-bar {
-  border-top: 1px solid #e8e8e8;
-  border-bottom: 1px solid #e8e8e8;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.vb-item {
-  padding: 16px 20px;
-  border-right: 1px solid #e8e8e8;
-}
-
-.vb-item:last-child {
-  border-right: none;
-}
-
-.vb-text {
-  font-size: 13px;
-  font-weight: 600;
-}
-
-.vb-text small {
-  display: block;
-  color: #777;
-  font-size: 12px;
-  font-weight: 400;
-}
-
-.intro-wrap {
-  border-bottom: 1px solid #e8e8e8;
-}
-
-.intro {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: center;
-  padding: 80px 40px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.intro-eyebrow,
 .section-eyebrow {
   font-size: 11px;
   font-weight: 600;
@@ -332,26 +268,6 @@ nav {
   text-transform: uppercase;
   color: #888;
   margin-bottom: 14px;
-}
-
-.intro-title {
-  font-size: clamp(26px, 3vw, 36px);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 16px;
-}
-
-.intro-text p {
-  font-size: 14px;
-  line-height: 1.8;
-  color: #555;
-  margin-bottom: 10px;
-}
-
-.intro-img {
-  aspect-ratio: 4 / 3;
-  border-radius: 4px;
-  overflow: hidden;
 }
 
 .alojamientos {
@@ -857,7 +773,6 @@ nav {
   }
 
   .hero,
-  .intro,
   .resenas-grid {
     grid-template-columns: 1fr;
   }
@@ -898,8 +813,7 @@ nav {
 
   .hero-left,
   .alojamientos,
-  .resenas,
-  .intro {
+  .resenas {
     padding-left: 16px;
     padding-right: 16px;
   }
@@ -930,10 +844,6 @@ nav {
 
   .bf-btn {
     padding: 14px;
-  }
-
-  .value-bar {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .cards {
