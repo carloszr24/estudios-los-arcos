@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const BOOKING_HOTEL_URL = "https://www.booking.com/hotel/es/estudios-los-arcos.es.html";
-const BOOKING_AVAILABILITY_URL = `${BOOKING_HOTEL_URL}#group_recommendation`;
+const BOOKING_AVAILABILITY_ANCHOR = "group_recommendation";
 const BOOKING_DEST_ID = "-404164";
 
 export default function Home() {
@@ -32,6 +32,23 @@ export default function Home() {
 
     return () => observer.disconnect();
   }, []);
+
+  const handleBookingSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const params = new URLSearchParams();
+
+    formData.forEach((value, key) => {
+      if (typeof value === "string" && value.length > 0) {
+        params.set(key, value);
+      }
+    });
+
+    const bookingUrl = `${BOOKING_HOTEL_URL}?${params.toString()}#${BOOKING_AVAILABILITY_ANCHOR}`;
+    const bookingWindow = window.open(bookingUrl, "_blank");
+    if (bookingWindow) bookingWindow.opener = null;
+  };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -97,7 +114,7 @@ export default function Home() {
           <div className="hero-tags">
             Cocina equipada <span>-</span> WiFi gratis <span>-</span> 10 min del centro
           </div>
-          <form className="booking-form" action={BOOKING_AVAILABILITY_URL} method="GET" target="_blank">
+          <form className="booking-form" onSubmit={handleBookingSubmit}>
             <input type="hidden" name="lang" value="es" />
             <input type="hidden" name="selected_currency" value="EUR" />
             <input type="hidden" name="do_availability_check" value="1" />
