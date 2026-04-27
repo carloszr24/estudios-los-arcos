@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const BOOKING_HOTEL_URL = "https://www.booking.com/hotel/es/estudios-los-arcos.es.html";
@@ -161,12 +162,14 @@ export default function Home() {
     <>
       <nav>
         <div className="nav-logo">
-          <div className="nav-logo-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-              <polyline points="9 22 9 12 15 12 15 22" />
-            </svg>
-          </div>
+          <Image
+            src="/images/logo-estudio-arcos.png"
+            alt="Logo Estudios Los Arcos"
+            width={140}
+            height={42}
+            className="brand-logo"
+            priority
+          />
           <div className="nav-logo-text">
             ESTUDIOS
             <br />
@@ -458,7 +461,16 @@ export default function Home() {
       </section>
 
       <footer className="footer-nav" id="contacto">
-        <div className="footer-logo-text">ESTUDIOS LOS ARCOS</div>
+        <div className="footer-brand">
+          <Image
+            src="/images/logo-estudio-arcos.png"
+            alt="Logo Estudios Los Arcos"
+            width={120}
+            height={36}
+            className="footer-brand-logo"
+          />
+          <div className="footer-logo-text">ESTUDIOS LOS ARCOS</div>
+        </div>
         <ul className="footer-links">
           <li>
             <a href="#alojamientos">Apartamentos</a>
