@@ -6,6 +6,80 @@ import { useEffect, useRef, useState } from "react";
 const BOOKING_HOTEL_URL = "https://www.booking.com/hotel/es/estudios-los-arcos.es.html";
 const BOOKING_AVAILABILITY_ANCHOR = "group_recommendation";
 const BOOKING_DEST_ID = "-404164";
+const REVIEWS = [
+  {
+    author: "Xsanz",
+    country: "Espana",
+    date: "19 abril 2026",
+    type: "En familia",
+    score: 10,
+    title: "Excepcional",
+    text: "La ubicacion es perfecta para visitar Teruel, a 10 minutos andando del centro. Fuimos 2 adultos y 2 ninas y estuvimos muy comodos.",
+  },
+  {
+    author: "Ruben",
+    country: "Espana",
+    date: "5 abril 2026",
+    type: "En familia",
+    score: 10,
+    title: "Excepcional",
+    text: "Hemos pasado unos dias en familia estupendos, la ubicacion y las instalaciones son excelentes. Para repetir sin duda.",
+  },
+  {
+    author: "Lisa",
+    country: "Espana",
+    date: "3 abril 2026",
+    type: "En pareja",
+    score: 10,
+    title: "Excelente",
+    text: "Todo muy comodo y limpio, ademas de cerca del centro turistico.",
+  },
+  {
+    author: "Claudia",
+    country: "Espana",
+    date: "23 marzo 2026",
+    type: "En familia",
+    score: 10,
+    title: "Genial",
+    text: "Bien situado, anfitrion atento, check-in facil y camas comodas. Estuvimos como en casa.",
+  },
+  {
+    author: "Celia",
+    country: "Espana",
+    date: "3 marzo 2026",
+    type: "En familia",
+    score: 10,
+    title: "Excelente",
+    text: "Todo limpio e impecable, ubicacion de 10 y calidad-precio excelente. Si volvemos a Teruel repetiremos.",
+  },
+  {
+    author: "Tomasz",
+    country: "Polonia",
+    date: "26 febrero 2026",
+    type: "Viajero solo",
+    score: 10,
+    title: "Muy recomendable",
+    text: "Ubicacion excelente para Casco Antiguo y Universidad. Zona tranquila y anfitrion muy atento.",
+  },
+  {
+    author: "Lidia",
+    country: "Espana",
+    date: "9 noviembre 2025",
+    type: "En pareja",
+    score: 10,
+    title: "Todo genial",
+    text: "Ubicacion excelente y alojamiento tal como en las fotos, con todo muy limpio.",
+  },
+  {
+    author: "David",
+    country: "Espana",
+    date: "11 septiembre 2025",
+    type: "En grupo",
+    score: 10,
+    title: "Excepcional",
+    text: "Muy buena ubicacion, alojamiento limpio y muchas facilidades para guardar las bicicletas.",
+  },
+];
 
 export default function Home() {
   const [adults, setAdults] = useState(2);
@@ -21,6 +95,7 @@ export default function Home() {
   const [directMessage, setDirectMessage] = useState("Selecciona fechas y comprueba disponibilidad.");
   const [directStatus, setDirectStatus] = useState<"neutral" | "ok" | "warn" | "no">("neutral");
   const [isDirectSubmitting, setIsDirectSubmitting] = useState(false);
+  const [reviewIndex, setReviewIndex] = useState(0);
   const guestsPanelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -157,6 +232,21 @@ export default function Home() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setReviewIndex((current) => (current + 1) % REVIEWS.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const goToPrevReview = () => {
+    setReviewIndex((current) => (current - 1 + REVIEWS.length) % REVIEWS.length);
+  };
+
+  const goToNextReview = () => {
+    setReviewIndex((current) => (current + 1) % REVIEWS.length);
+  };
 
   return (
     <>
@@ -407,17 +497,43 @@ export default function Home() {
           </div>
           <div className="resenas-grid reveal">
             <div className="rating-big">
-              <div className="rating-big-num">8.5</div>
-              <div className="rating-label">Muy bien</div>
-              <div className="rating-count">511 comentarios</div>
+              <div className="rating-big-num">10</div>
+              <div className="rating-label">Excepcional</div>
+              <div className="rating-count">Basado en resenas recientes</div>
             </div>
-            <div className="review-card d1">
-              <p className="review-text">La ubicacion es perfecta para visitar Teruel, muy cerca del centro y en una zona tranquila.</p>
-              <div className="review-author">Maribel, Espana</div>
-            </div>
-            <div className="review-card d2">
-              <p className="review-text">Estudio comodo, limpio y con todo lo necesario. Ideal para viajar en familia.</p>
-              <div className="review-author">Xsanz, Espana</div>
+            <div className="reviews-carousel">
+              <div className="review-card">
+                <div className="review-meta">
+                  <span className="review-badge">{REVIEWS[reviewIndex].title}</span>
+                  <span className="review-score">Puntuacion: {REVIEWS[reviewIndex].score}</span>
+                </div>
+                <p className="review-text">{REVIEWS[reviewIndex].text}</p>
+                <div className="review-author">
+                  {REVIEWS[reviewIndex].author}, {REVIEWS[reviewIndex].country}
+                </div>
+                <div className="review-submeta">
+                  {REVIEWS[reviewIndex].type} - {REVIEWS[reviewIndex].date}
+                </div>
+              </div>
+              <div className="review-controls">
+                <button type="button" className="review-nav-btn" onClick={goToPrevReview} aria-label="Resena anterior">
+                  ‹
+                </button>
+                <div className="review-dots">
+                  {REVIEWS.map((review, index) => (
+                    <button
+                      type="button"
+                      key={review.author + review.date}
+                      className={`review-dot ${index === reviewIndex ? "active" : ""}`}
+                      onClick={() => setReviewIndex(index)}
+                      aria-label={`Ir a resena ${index + 1}`}
+                    />
+                  ))}
+                </div>
+                <button type="button" className="review-nav-btn" onClick={goToNextReview} aria-label="Resena siguiente">
+                  ›
+                </button>
+              </div>
             </div>
           </div>
         </div>

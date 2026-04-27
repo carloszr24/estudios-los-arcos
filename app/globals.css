@@ -493,7 +493,7 @@ nav {
 
 .resenas-grid {
   display: grid;
-  grid-template-columns: 220px 1fr 1fr;
+  grid-template-columns: 220px 1fr;
   gap: 24px;
 }
 
@@ -530,6 +530,37 @@ nav {
   padding: 20px;
 }
 
+.reviews-carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.review-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.review-badge {
+  display: inline-block;
+  border: 1px solid #dedede;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #333;
+}
+
+.review-score {
+  font-size: 12px;
+  color: #666;
+}
+
 .review-text {
   font-size: 13px;
   line-height: 1.7;
@@ -540,6 +571,51 @@ nav {
 .review-author {
   font-size: 12px;
   font-weight: 600;
+}
+
+.review-submeta {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #777;
+}
+
+.review-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.review-nav-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: #2b2b2b;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.review-dots {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.review-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: none;
+  background: #d6d6d6;
+  cursor: pointer;
+}
+
+.review-dot.active {
+  background: #1a1a1a;
 }
 
 .demo-calendar {
@@ -775,6 +851,11 @@ nav {
 
   .cards {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .review-meta {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 
