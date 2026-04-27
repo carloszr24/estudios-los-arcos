@@ -6,6 +6,24 @@ import { useEffect, useRef, useState } from "react";
 const BOOKING_HOTEL_URL = "https://www.booking.com/hotel/es/estudios-los-arcos.es.html";
 const BOOKING_AVAILABILITY_ANCHOR = "group_recommendation";
 const BOOKING_DEST_ID = "-404164";
+const HERO_SLIDES = [
+  {
+    src: "/images/entrada-los-arcos.jpg",
+    alt: "Entrada de Estudios Los Arcos",
+  },
+  {
+    src: "/images/comedor-los-arcos.jpg",
+    alt: "Comedor de Estudios Los Arcos",
+  },
+  {
+    src: "/images/habitacion-los-arcos.jpg",
+    alt: "Habitación de Estudios Los Arcos",
+  },
+  {
+    src: "/images/vistas-teruel.jpg",
+    alt: "Vistas de Teruel",
+  },
+];
 const TERUEL_SLIDES = [
   {
     src: "/images/teruel-carrusel-1.jpg",
@@ -115,6 +133,7 @@ export default function Home() {
   const [reviewIndex, setReviewIndex] = useState(REVIEWS.length);
   const [reviewTransition, setReviewTransition] = useState(true);
   const [cardsPerView, setCardsPerView] = useState(2);
+  const [heroSlideIndex, setHeroSlideIndex] = useState(0);
   const [teruelSlideIndex, setTeruelSlideIndex] = useState(0);
   const guestsPanelRef = useRef<HTMLDivElement>(null);
   const carouselReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
@@ -166,6 +185,13 @@ export default function Home() {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroSlideIndex((current) => (current + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -225,6 +251,14 @@ export default function Home() {
     setTeruelSlideIndex((current) => (current + 1) % TERUEL_SLIDES.length);
   };
 
+  const goToPrevHeroSlide = () => {
+    setHeroSlideIndex((current) => (current - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+  };
+
+  const goToNextHeroSlide = () => {
+    setHeroSlideIndex((current) => (current + 1) % HERO_SLIDES.length);
+  };
+
   return (
     <>
       <nav>
@@ -264,7 +298,31 @@ export default function Home() {
       </nav>
 
       <section className="hero">
-        <div className="hero-left">
+        {HERO_SLIDES.map((slide, index) => (
+          <div key={slide.src} className={`hero-slide ${index === heroSlideIndex ? "is-active" : ""}`}>
+            <img src={slide.src} alt={slide.alt} />
+          </div>
+        ))}
+        <div className="hero-overlay" />
+        <button type="button" className="hero-nav hero-nav-prev" onClick={goToPrevHeroSlide} aria-label="Imagen anterior">
+          ‹
+        </button>
+        <button type="button" className="hero-nav hero-nav-next" onClick={goToNextHeroSlide} aria-label="Imagen siguiente">
+          ›
+        </button>
+        <div className="hero-dots">
+          {HERO_SLIDES.map((slide, index) => (
+            <button
+              key={slide.alt}
+              type="button"
+              className={`hero-dot ${index === heroSlideIndex ? "active" : ""}`}
+              onClick={() => setHeroSlideIndex(index)}
+              aria-label={`Ir a imagen ${index + 1}`}
+            />
+          ))}
+        </div>
+
+        <div className="hero-content">
           <h1 className="hero-title">Teruel desde otro punto de vista</h1>
           <form className="booking-form" onSubmit={handleBookingSubmit}>
             <input type="hidden" name="lang" value="es" />
@@ -341,12 +399,6 @@ export default function Home() {
               Ver apartamentos
             </a>
           </div>
-        </div>
-        <div className="hero-right">
-          <img
-            src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80"
-            alt="Apartamento Estudios Los Arcos"
-          />
         </div>
       </section>
 
