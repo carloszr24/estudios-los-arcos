@@ -28,7 +28,7 @@ nav {
   background: #fff;
   border-bottom: 1px solid #e8e8e8;
   padding: 0 24px;
-  height: 60px;
+  height: 84px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,40 +37,13 @@ nav {
 .nav-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0;
 }
 
 .brand-logo {
   width: auto;
-  height: 36px;
+  height: 66px;
   object-fit: contain;
-}
-
-.nav-logo-icon {
-  width: 36px;
-  height: 36px;
-  border: 2px solid #1a1a1a;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.nav-logo-icon svg {
-  width: 18px;
-  height: 18px;
-}
-
-.nav-logo-text {
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.nav-logo-text span {
-  display: block;
-  font-weight: 400;
-  color: #555;
 }
 
 .nav-links {
@@ -108,7 +81,7 @@ nav {
 }
 
 .hero {
-  margin-top: 60px;
+  margin-top: 84px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   min-height: 480px;
@@ -748,12 +721,8 @@ nav {
     padding: 0 12px;
   }
 
-  .nav-logo-text {
-    display: none;
-  }
-
   .brand-logo {
-    height: 30px;
+    height: 56px;
   }
 
   .hero-left,

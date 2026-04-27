@@ -165,16 +165,11 @@ export default function Home() {
           <Image
             src="/images/logo-estudio-arcos.png"
             alt="Logo Estudios Los Arcos"
-            width={140}
-            height={42}
+            width={230}
+            height={70}
             className="brand-logo"
             priority
           />
-          <div className="nav-logo-text">
-            ESTUDIOS
-            <br />
-            <span>LOS ARCOS</span>
-          </div>
         </div>
         <ul className="nav-links">
           <li>
