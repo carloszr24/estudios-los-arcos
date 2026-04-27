@@ -499,8 +499,16 @@ export default function Home() {
 
       <section className="ubicacion-section" id="ubicacion">
         <div className="ubicacion-map">
-          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&q=80" alt="Mapa de Teruel" />
-          <div className="map-pin">●</div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d24331.98200953164!2d-1.1183267719870773!3d40.33130293773896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5e73320d7177a5%3A0xf2f0671726916355!2sEstudios%20los%20Arcos%20Teruel!5e0!3m2!1ses!2ses!4v1777302018786!5m2!1ses!2ses"
+            width="600"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Mapa de Estudios Los Arcos Teruel"
+          />
         </div>
         <div className="ubicacion-content reveal">
           <p className="section-eyebrow">Ubicación</p>
