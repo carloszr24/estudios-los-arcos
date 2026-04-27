@@ -86,15 +86,6 @@ export default function Home() {
   const [children, setChildren] = useState(0);
   const [rooms, setRooms] = useState(1);
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
-  const [directCheckin, setDirectCheckin] = useState("");
-  const [directCheckout, setDirectCheckout] = useState("");
-  const [guestName, setGuestName] = useState("");
-  const [guestEmail, setGuestEmail] = useState("");
-  const [guestPhone, setGuestPhone] = useState("");
-  const [guestNotes, setGuestNotes] = useState("");
-  const [directMessage, setDirectMessage] = useState("Selecciona fechas y comprueba disponibilidad.");
-  const [directStatus, setDirectStatus] = useState<"neutral" | "ok" | "warn" | "no">("neutral");
-  const [isDirectSubmitting, setIsDirectSubmitting] = useState(false);
   const [reviewIndex, setReviewIndex] = useState(REVIEWS.length);
   const [reviewTransition, setReviewTransition] = useState(true);
   const [cardsPerView, setCardsPerView] = useState(2);
@@ -136,92 +127,6 @@ export default function Home() {
     const bookingUrl = `${BOOKING_HOTEL_URL}?${params.toString()}#${BOOKING_AVAILABILITY_ANCHOR}`;
     const bookingWindow = window.open(bookingUrl, "_blank");
     if (bookingWindow) bookingWindow.opener = null;
-  };
-
-  const runDirectAvailability = async () => {
-    if (!directCheckin || !directCheckout) {
-      setDirectStatus("neutral");
-      setDirectMessage("Selecciona entrada y salida para comprobar disponibilidad.");
-      return;
-    }
-
-    const checkin = new Date(directCheckin);
-    const checkout = new Date(directCheckout);
-    if (checkout <= checkin) {
-      setDirectStatus("warn");
-      setDirectMessage("La salida debe ser posterior a la entrada.");
-      return;
-    }
-
-    const response = await fetch(`/api/availability?checkin=${directCheckin}&checkout=${directCheckout}`);
-    if (!response.ok) {
-      setDirectStatus("warn");
-      setDirectMessage("No hemos podido comprobar disponibilidad ahora. Inténtalo de nuevo.");
-      return;
-    }
-
-    const result = (await response.json()) as { available: boolean; roomsLeft: number };
-    if (!result.available) {
-      setDirectStatus("no");
-      setDirectMessage("No disponible para esas fechas. Prueba con fechas cercanas.");
-      return;
-    }
-
-    if (result.roomsLeft <= 1) {
-      setDirectStatus("warn");
-      setDirectMessage("Última habitación disponible para esas fechas.");
-      return;
-    }
-
-    setDirectStatus("ok");
-    setDirectMessage(`Disponible: ${result.roomsLeft} habitaciones para esas fechas.`);
-  };
-
-  const submitDirectReservation = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!directCheckin || !directCheckout || !guestName || !guestEmail || !guestPhone) {
-      setDirectStatus("warn");
-      setDirectMessage("Completa fechas, nombre, email y teléfono para solicitar reserva.");
-      return;
-    }
-
-    setIsDirectSubmitting(true);
-    try {
-      const response = await fetch("/api/reservations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          checkin: directCheckin,
-          checkout: directCheckout,
-          adults,
-          children,
-          rooms,
-          guestName,
-          guestEmail,
-          guestPhone,
-          notes: guestNotes,
-        }),
-      });
-
-      const data = (await response.json()) as { error?: string };
-      if (!response.ok) {
-        setDirectStatus("warn");
-        setDirectMessage(data.error ?? "No se ha podido guardar la reserva.");
-        return;
-      }
-
-      setDirectStatus("ok");
-      setDirectMessage("Solicitud enviada. Te contactaremos para confirmar la reserva.");
-      setGuestName("");
-      setGuestEmail("");
-      setGuestPhone("");
-      setGuestNotes("");
-    } catch {
-      setDirectStatus("warn");
-      setDirectMessage("Error de conexión. Inténtalo de nuevo.");
-    } finally {
-      setIsDirectSubmitting(false);
-    }
   };
 
   useEffect(() => {
@@ -398,9 +303,6 @@ export default function Home() {
             </button>
           </form>
           <div className="hero-actions">
-            <a href="#demo-disponibilidad" className="btn-dark">
-              Comprobar disponibilidad en web
-            </a>
             <a href="#alojamientos" className="btn-outline">
               Ver apartamentos
             </a>
@@ -644,51 +546,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className="demo-calendar" id="demo-disponibilidad">
-        <div className="demo-calendar-inner">
-          <p className="section-eyebrow">Reserva directa</p>
-          <h3 className="demo-title">Comprobar disponibilidad</h3>
-          <p className="demo-sub">Consulta disponibilidad y envía tu solicitud sin salir de la web.</p>
-          <form className="direct-booking-form" onSubmit={submitDirectReservation}>
-            <div className="demo-form-row">
-              <label className="demo-field">
-                <span>Entrada</span>
-                <input type="date" value={directCheckin} onChange={(event) => setDirectCheckin(event.target.value)} />
-              </label>
-              <label className="demo-field">
-                <span>Salida</span>
-                <input type="date" value={directCheckout} onChange={(event) => setDirectCheckout(event.target.value)} />
-              </label>
-              <button type="button" className="demo-btn" onClick={runDirectAvailability}>
-                Comprobar disponibilidad
-              </button>
-            </div>
-            <div className="direct-grid">
-              <label className="demo-field">
-                <span>Nombre y apellidos</span>
-                <input type="text" value={guestName} onChange={(event) => setGuestName(event.target.value)} />
-              </label>
-              <label className="demo-field">
-                <span>Email</span>
-                <input type="email" value={guestEmail} onChange={(event) => setGuestEmail(event.target.value)} />
-              </label>
-              <label className="demo-field">
-                <span>Telefono</span>
-                <input type="tel" value={guestPhone} onChange={(event) => setGuestPhone(event.target.value)} />
-              </label>
-            </div>
-            <label className="demo-field direct-notes">
-              <span>Notas (opcional)</span>
-              <textarea value={guestNotes} onChange={(event) => setGuestNotes(event.target.value)} rows={3} />
-            </label>
-            <button type="submit" className="demo-btn direct-submit" disabled={isDirectSubmitting}>
-              {isDirectSubmitting ? "Enviando..." : "Solicitar reserva"}
-            </button>
-          </form>
-          <div className={`demo-result ${directStatus}`}>{directMessage}</div>
         </div>
       </section>
 
