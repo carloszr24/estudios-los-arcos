@@ -276,12 +276,17 @@ export default function Home() {
               </select>
             </div>
             <button type="submit" className="bf-btn">
-              Ver disponibilidad
+              Buscar en Booking
             </button>
           </form>
-          <a href="#alojamientos" className="btn-outline">
-            Ver apartamentos
-          </a>
+          <div className="hero-actions">
+            <a href="#demo-disponibilidad" className="btn-dark">
+              Comprobar disponibilidad en web
+            </a>
+            <a href="#alojamientos" className="btn-outline">
+              Ver apartamentos
+            </a>
+          </div>
         </div>
         <div className="hero-right">
           <img
