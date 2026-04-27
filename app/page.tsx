@@ -548,29 +548,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="galeria-section" id="galeria">
-        <div className="galeria-inner reveal">
-          <div className="galeria-head">
-            <p className="section-eyebrow">Galería</p>
-            <h2 className="section-title">Conoce los apartamentos por dentro</h2>
-            <p className="galeria-sub">Desliza para ver más fotos. Esta sección queda lista para convertirla en carrusel automático.</p>
-          </div>
-          <div className="galeria-track" aria-label="Galería de apartamentos">
-            {[
-              "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80",
-              "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&q=80",
-              "https://images.unsplash.com/photo-1493666438817-866a91353ca9?w=1200&q=80",
-              "https://images.unsplash.com/photo-1460317442991-0ec209397118?w=1200&q=80",
-              "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80&sat=-20",
-            ].map((image, index) => (
-              <article className="galeria-card" key={`${image}-${index}`}>
-                <img src={image} alt={`Imagen apartamento ${index + 1}`} />
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="entorno-section">
         <div className="entorno-inner reveal">
           <div className="entorno-text">
