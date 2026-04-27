@@ -97,6 +97,7 @@ export default function Home() {
   const [isDirectSubmitting, setIsDirectSubmitting] = useState(false);
   const [reviewIndex, setReviewIndex] = useState(REVIEWS.length);
   const [reviewTransition, setReviewTransition] = useState(true);
+  const [cardsPerView, setCardsPerView] = useState(2);
   const guestsPanelRef = useRef<HTMLDivElement>(null);
   const carouselReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
 
@@ -241,6 +242,15 @@ export default function Home() {
       setReviewIndex((current) => current + 1);
     }, 5000);
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const onResize = () => {
+      setCardsPerView(window.innerWidth < 900 ? 1 : 2);
+    };
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   const goToPrevReview = () => {
@@ -512,53 +522,52 @@ export default function Home() {
 
       <section className="resenas" id="resenas">
         <div className="resenas-inner">
-          <div className="resenas-header reveal">
-            <p className="section-eyebrow">Lo que dicen nuestros huéspedes</p>
-          </div>
           <div className="resenas-grid reveal">
             <div className="rating-big booking-rating">
               <Image
                 src="/images/booking-logo.png"
                 alt="Booking.com"
-                width={130}
-                height={22}
+                width={160}
+                height={28}
                 className="booking-logo"
               />
-              <div className="booking-rating-row">
-                <div className="rating-big-num">8,5</div>
-                <div>
-                  <div className="rating-label">Muy bien</div>
-                  <div className="rating-count">511 comentarios</div>
-                </div>
-              </div>
+              <div className="rating-big-num">8,5</div>
+              <div className="rating-label">Muy bien</div>
+              <div className="rating-count">511 comentarios</div>
             </div>
             <div className="reviews-carousel">
               <div
                 className={`reviews-track ${reviewTransition ? "" : "no-transition"}`}
-                style={{ transform: `translateX(-${reviewIndex * 100}%)` }}
+                style={{ transform: `translateX(-${reviewIndex * (100 / cardsPerView)}%)` }}
                 onTransitionEnd={handleReviewTrackTransitionEnd}
               >
                 {carouselReviews.map((review, index) => (
-                  <article className="review-card" key={`${review.author}-${review.date}-${index}`}>
-                    <div className="review-meta">
-                      <span className="review-badge">{review.title}</span>
-                    </div>
-                    <p className="review-text">{review.text}</p>
-                    <div className="review-author">
-                      {review.author}, {review.country}
-                    </div>
-                    <div className="review-submeta">
-                      {review.type} - {review.date}
-                    </div>
-                    <img
-                      src="/images/rating-number.png"
-                      alt="Valoración 10"
-                      className="review-score-image"
-                      onError={(event) => {
-                        event.currentTarget.style.display = "none";
-                      }}
-                    />
-                  </article>
+                  <div
+                    className="review-slide"
+                    key={`${review.author}-${review.date}-${index}`}
+                    style={{ width: `${100 / cardsPerView}%` }}
+                  >
+                    <article className="review-card">
+                      <div className="review-meta">
+                        <span className="review-badge">{review.title}</span>
+                      </div>
+                      <p className="review-text">{review.text}</p>
+                      <div className="review-author">
+                        {review.author}, {review.country}
+                      </div>
+                      <div className="review-submeta">
+                        {review.type} - {review.date}
+                      </div>
+                      <img
+                        src="/images/rating-number.png"
+                        alt="Valoración 10"
+                        className="review-score-image"
+                        onError={(event) => {
+                          event.currentTarget.style.display = "none";
+                        }}
+                      />
+                    </article>
+                  </div>
                 ))}
               </div>
               <div className="review-controls">

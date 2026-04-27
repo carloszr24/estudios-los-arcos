@@ -493,8 +493,9 @@ nav {
 
 .resenas-grid {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 260px 1fr;
   gap: 24px;
+  align-items: stretch;
 }
 
 .rating-big,
@@ -514,20 +515,19 @@ nav {
   border-color: #0a4ab9;
   color: #fff;
   text-align: left;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 240px;
 }
 
 .booking-logo {
   width: auto;
-  height: 20px;
+  height: 24px;
   object-fit: contain;
-  margin-bottom: 14px;
+  margin-bottom: 18px;
   filter: brightness(0) invert(1);
-}
-
-.booking-rating-row {
-  display: flex;
-  align-items: center;
-  gap: 14px;
 }
 
 .rating-big-num {
@@ -552,11 +552,15 @@ nav {
   color: rgba(255, 255, 255, 0.94);
 }
 
+.booking-rating .rating-label {
+  margin-top: 4px;
+}
+
 .review-card {
-  padding: 20px;
-  width: 100%;
-  flex: 0 0 100%;
+  padding: 18px;
   position: relative;
+  min-height: 240px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
 .reviews-carousel {
@@ -569,10 +573,16 @@ nav {
 .reviews-track {
   display: flex;
   transition: transform 0.45s ease;
+  margin: 0 -7px;
 }
 
 .reviews-track.no-transition {
   transition: none;
+}
+
+.review-slide {
+  padding: 0 7px;
+  flex-shrink: 0;
 }
 
 .review-meta {
@@ -628,7 +638,8 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
+  margin-top: 2px;
 }
 
 .review-nav-btn {
@@ -651,7 +662,7 @@ nav {
 
 .review-dots {
   display: flex;
-  gap: 6px;
+  gap: 7px;
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -971,6 +982,14 @@ nav {
 
   .galeria-track {
     grid-auto-columns: 84%;
+  }
+
+  .resenas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-rating {
+    min-height: 180px;
   }
 
   .cta-final,
