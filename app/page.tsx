@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const BOOKING_HOTEL_URL = "https://www.booking.com/hotel/es/estudios-los-arcos.es.html";
+const BOOKING_DEST_ID = "-404164";
 
 export default function Home() {
   const [adults, setAdults] = useState(2);
@@ -98,6 +99,15 @@ export default function Home() {
           <form className="booking-form" action={BOOKING_HOTEL_URL} method="GET" target="_blank">
             <input type="hidden" name="lang" value="es" />
             <input type="hidden" name="selected_currency" value="EUR" />
+            <input type="hidden" name="do_availability_check" value="1" />
+            <input type="hidden" name="hp_avform" value="1" />
+            <input type="hidden" name="hp_group_set" value="0" />
+            <input type="hidden" name="origin" value="hp" />
+            <input type="hidden" name="src" value="hotel" />
+            <input type="hidden" name="type" value="total" />
+            <input type="hidden" name="sb_price_type" value="total" />
+            <input type="hidden" name="dest_id" value={BOOKING_DEST_ID} />
+            <input type="hidden" name="dest_type" value="city" />
             <input type="hidden" name="group_adults" value={adults} />
             <input type="hidden" name="group_children" value={children} />
             <input type="hidden" name="no_rooms" value={rooms} />
