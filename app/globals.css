@@ -146,21 +146,22 @@ nav {
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 6px;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: stretch;
   overflow: hidden;
-  max-width: 620px;
+  max-width: 760px;
   margin-bottom: 16px;
 }
 
 .bf-field {
-  flex: 1;
   padding: 12px 16px;
   border-right: 1px solid #e8e8e8;
+  position: relative;
 }
 
 .bf-field.guests {
-  flex: 0.7;
+  min-width: 110px;
 }
 
 .bf-label {
@@ -182,14 +183,73 @@ nav {
   width: 100%;
 }
 
+.bf-trigger {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  padding: 0;
+}
+
+.guest-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 260px;
+  background: #fff;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.14);
+  padding: 12px;
+  z-index: 30;
+}
+
+.guest-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 2px;
+  font-size: 13px;
+}
+
+.guest-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.guest-controls button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #cfcfcf;
+  background: #fff;
+  color: #1a1a1a;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.guest-controls strong {
+  min-width: 12px;
+  text-align: center;
+  font-size: 13px;
+}
+
 .bf-btn {
   padding: 0 20px;
   font-size: 13px;
   font-weight: 600;
+  border: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .btn-outline,
@@ -553,12 +613,19 @@ nav {
   }
 
   .booking-form {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    overflow: visible;
   }
 
   .bf-field {
     border-right: none;
     border-bottom: 1px solid #e8e8e8;
+  }
+
+  .guest-popover {
+    left: 0;
+    right: 0;
+    min-width: 0;
   }
 
   .bf-btn {

@@ -1,10 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const BOOKING_URL = "https://www.booking.com/";
+const BOOKING_HOTEL_URL = "https://www.booking.com/hotel/es/estudios-los-arcos.es.html";
 
 export default function Home() {
+  const [adults, setAdults] = useState(2);
+  const [children, setChildren] = useState(0);
+  const [rooms, setRooms] = useState(1);
+  const [isGuestsOpen, setIsGuestsOpen] = useState(false);
+  const guestsPanelRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -23,6 +29,18 @@ export default function Home() {
     });
 
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!guestsPanelRef.current) return;
+      if (!guestsPanelRef.current.contains(event.target as Node)) {
+        setIsGuestsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
@@ -61,7 +79,7 @@ export default function Home() {
             <a href="#contacto">Contacto</a>
           </li>
         </ul>
-        <a href={BOOKING_URL} className="nav-reserve" target="_blank" rel="noreferrer">
+        <a href={BOOKING_HOTEL_URL} className="nav-reserve" target="_blank" rel="noreferrer">
           Reservar ahora
         </a>
       </nav>
@@ -77,28 +95,67 @@ export default function Home() {
           <div className="hero-tags">
             Cocina equipada <span>-</span> WiFi gratis <span>-</span> 10 min del centro
           </div>
-          <div className="booking-form">
+          <form className="booking-form" action={BOOKING_HOTEL_URL} method="GET" target="_blank">
+            <input type="hidden" name="lang" value="es" />
+            <input type="hidden" name="selected_currency" value="EUR" />
+            <input type="hidden" name="group_adults" value={adults} />
+            <input type="hidden" name="group_children" value={children} />
+            <input type="hidden" name="no_rooms" value={rooms} />
             <div className="bf-field">
               <div className="bf-label">Entrada</div>
-              <input type="date" className="bf-input" />
+              <input type="date" className="bf-input" name="checkin" />
             </div>
             <div className="bf-field">
               <div className="bf-label">Salida</div>
-              <input type="date" className="bf-input" />
+              <input type="date" className="bf-input" name="checkout" />
             </div>
-            <div className="bf-field guests">
+            <div className="bf-field bf-field-popover" ref={guestsPanelRef}>
               <div className="bf-label">Huespedes</div>
-              <select className="bf-select" defaultValue="2 adultos">
-                <option>1 adulto</option>
-                <option>2 adultos</option>
-                <option>3 adultos</option>
-                <option>4 adultos</option>
+              <button type="button" className="bf-trigger" onClick={() => setIsGuestsOpen((prev) => !prev)}>
+                {adults} adultos {children > 0 ? `- ${children} ninos` : ""}
+              </button>
+              {isGuestsOpen && (
+                <div className="guest-popover">
+                  <div className="guest-row">
+                    <span>Adultos</span>
+                    <div className="guest-controls">
+                      <button type="button" onClick={() => setAdults((value) => Math.max(1, value - 1))}>
+                        -
+                      </button>
+                      <strong>{adults}</strong>
+                      <button type="button" onClick={() => setAdults((value) => Math.min(8, value + 1))}>
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div className="guest-row">
+                    <span>Ninos</span>
+                    <div className="guest-controls">
+                      <button type="button" onClick={() => setChildren((value) => Math.max(0, value - 1))}>
+                        -
+                      </button>
+                      <strong>{children}</strong>
+                      <button type="button" onClick={() => setChildren((value) => Math.min(6, value + 1))}>
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="bf-field rooms">
+              <div className="bf-label">Habitaciones</div>
+              <select className="bf-select" value={rooms} onChange={(event) => setRooms(Number(event.target.value))}>
+                <option value="1">1 habitacion</option>
+                <option value="2">2 habitaciones</option>
+                <option value="3">3 habitaciones</option>
+                <option value="4">4 habitaciones</option>
               </select>
             </div>
-            <a href={BOOKING_URL} className="bf-btn" target="_blank" rel="noreferrer">
+            <button type="submit" className="bf-btn">
               Ver disponibilidad
-            </a>
-          </div>
+            </button>
+          </form>
           <a href="#alojamientos" className="btn-outline">
             Ver apartamentos
           </a>
@@ -185,7 +242,7 @@ export default function Home() {
                   <li>Bano privado</li>
                   <li>TV de pantalla plana</li>
                 </ul>
-                <a href={BOOKING_URL} className="btn-card" target="_blank" rel="noreferrer">
+                <a href={BOOKING_HOTEL_URL} className="btn-card" target="_blank" rel="noreferrer">
                   Reservar en Booking
                 </a>
               </div>
@@ -222,7 +279,7 @@ export default function Home() {
           <div className="cta-text-main">Todo listo para tu estancia en Teruel</div>
           <div className="cta-text-sub">Apartamentos funcionales con todo lo que necesitas.</div>
         </div>
-        <a href={BOOKING_URL} className="cta-btn" target="_blank" rel="noreferrer">
+        <a href={BOOKING_HOTEL_URL} className="cta-btn" target="_blank" rel="noreferrer">
           Reservar en Booking
         </a>
       </section>
