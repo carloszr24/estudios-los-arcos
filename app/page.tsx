@@ -9,48 +9,48 @@ const BOOKING_DEST_ID = "-404164";
 const REVIEWS = [
   {
     author: "Xsanz",
-    country: "Espana",
+    country: "España",
     date: "19 abril 2026",
     type: "En familia",
     score: 10,
     title: "Excepcional",
-    text: "La ubicacion es perfecta para visitar Teruel, a 10 minutos andando del centro. Fuimos 2 adultos y 2 ninas y estuvimos muy comodos.",
+    text: "La ubicación es perfecta para visitar Teruel, a 10 minutos andando del centro. Fuimos 2 adultos y 2 niñas y estuvimos muy cómodos.",
   },
   {
     author: "Ruben",
-    country: "Espana",
+    country: "España",
     date: "5 abril 2026",
     type: "En familia",
     score: 10,
     title: "Excepcional",
-    text: "Hemos pasado unos dias en familia estupendos, la ubicacion y las instalaciones son excelentes. Para repetir sin duda.",
+    text: "Hemos pasado unos días en familia estupendos, la ubicación y las instalaciones son excelentes. Para repetir sin duda.",
   },
   {
     author: "Lisa",
-    country: "Espana",
+    country: "España",
     date: "3 abril 2026",
     type: "En pareja",
     score: 10,
     title: "Excelente",
-    text: "Todo muy comodo y limpio, ademas de cerca del centro turistico.",
+    text: "Todo muy cómodo y limpio, además de cerca del centro turístico.",
   },
   {
     author: "Claudia",
-    country: "Espana",
+    country: "España",
     date: "23 marzo 2026",
     type: "En familia",
     score: 10,
     title: "Genial",
-    text: "Bien situado, anfitrion atento, check-in facil y camas comodas. Estuvimos como en casa.",
+    text: "Bien situado, anfitrión atento, check-in fácil y camas cómodas. Estuvimos como en casa.",
   },
   {
     author: "Celia",
-    country: "Espana",
+    country: "España",
     date: "3 marzo 2026",
     type: "En familia",
     score: 10,
     title: "Excelente",
-    text: "Todo limpio e impecable, ubicacion de 10 y calidad-precio excelente. Si volvemos a Teruel repetiremos.",
+    text: "Todo limpio e impecable, ubicación de 10 y calidad-precio excelente. Si volvemos a Teruel repetiremos.",
   },
   {
     author: "Tomasz",
@@ -59,25 +59,25 @@ const REVIEWS = [
     type: "Viajero solo",
     score: 10,
     title: "Muy recomendable",
-    text: "Ubicacion excelente para Casco Antiguo y Universidad. Zona tranquila y anfitrion muy atento.",
+    text: "Ubicación excelente para Casco Antiguo y Universidad. Zona tranquila y anfitrión muy atento.",
   },
   {
     author: "Lidia",
-    country: "Espana",
+    country: "España",
     date: "9 noviembre 2025",
     type: "En pareja",
     score: 10,
     title: "Todo genial",
-    text: "Ubicacion excelente y alojamiento tal como en las fotos, con todo muy limpio.",
+    text: "Ubicación excelente y alojamiento tal como en las fotos, con todo muy limpio.",
   },
   {
     author: "David",
-    country: "Espana",
+    country: "España",
     date: "11 septiembre 2025",
     type: "En grupo",
     score: 10,
     title: "Excepcional",
-    text: "Muy buena ubicacion, alojamiento limpio y muchas facilidades para guardar las bicicletas.",
+    text: "Muy buena ubicación, alojamiento limpio y muchas facilidades para guardar las bicicletas.",
   },
 ];
 
@@ -95,8 +95,10 @@ export default function Home() {
   const [directMessage, setDirectMessage] = useState("Selecciona fechas y comprueba disponibilidad.");
   const [directStatus, setDirectStatus] = useState<"neutral" | "ok" | "warn" | "no">("neutral");
   const [isDirectSubmitting, setIsDirectSubmitting] = useState(false);
-  const [reviewIndex, setReviewIndex] = useState(0);
+  const [reviewIndex, setReviewIndex] = useState(REVIEWS.length);
+  const [reviewTransition, setReviewTransition] = useState(true);
   const guestsPanelRef = useRef<HTMLDivElement>(null);
+  const carouselReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -153,7 +155,7 @@ export default function Home() {
     const response = await fetch(`/api/availability?checkin=${directCheckin}&checkout=${directCheckout}`);
     if (!response.ok) {
       setDirectStatus("warn");
-      setDirectMessage("No hemos podido comprobar disponibilidad ahora. Intentalo de nuevo.");
+      setDirectMessage("No hemos podido comprobar disponibilidad ahora. Inténtalo de nuevo.");
       return;
     }
 
@@ -166,7 +168,7 @@ export default function Home() {
 
     if (result.roomsLeft <= 1) {
       setDirectStatus("warn");
-      setDirectMessage("Ultima habitacion disponible para esas fechas.");
+      setDirectMessage("Última habitación disponible para esas fechas.");
       return;
     }
 
@@ -178,7 +180,7 @@ export default function Home() {
     event.preventDefault();
     if (!directCheckin || !directCheckout || !guestName || !guestEmail || !guestPhone) {
       setDirectStatus("warn");
-      setDirectMessage("Completa fechas, nombre, email y telefono para solicitar reserva.");
+      setDirectMessage("Completa fechas, nombre, email y teléfono para solicitar reserva.");
       return;
     }
 
@@ -215,7 +217,7 @@ export default function Home() {
       setGuestNotes("");
     } catch {
       setDirectStatus("warn");
-      setDirectMessage("Error de conexion. Intentalo de nuevo.");
+      setDirectMessage("Error de conexión. Inténtalo de nuevo.");
     } finally {
       setIsDirectSubmitting(false);
     }
@@ -235,17 +237,35 @@ export default function Home() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setReviewIndex((current) => (current + 1) % REVIEWS.length);
+      setReviewTransition(true);
+      setReviewIndex((current) => current + 1);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
   const goToPrevReview = () => {
-    setReviewIndex((current) => (current - 1 + REVIEWS.length) % REVIEWS.length);
+    setReviewTransition(true);
+    setReviewIndex((current) => current - 1);
   };
 
   const goToNextReview = () => {
-    setReviewIndex((current) => (current + 1) % REVIEWS.length);
+    setReviewTransition(true);
+    setReviewIndex((current) => current + 1);
+  };
+
+  const activeReviewIndex = ((reviewIndex % REVIEWS.length) + REVIEWS.length) % REVIEWS.length;
+
+  const handleReviewTrackTransitionEnd = () => {
+    if (reviewIndex >= REVIEWS.length * 2) {
+      setReviewTransition(false);
+      setReviewIndex(REVIEWS.length);
+      return;
+    }
+
+    if (reviewIndex < REVIEWS.length) {
+      setReviewTransition(false);
+      setReviewIndex(REVIEWS.length * 2 - 1);
+    }
   };
 
   return (
@@ -269,10 +289,10 @@ export default function Home() {
             <a href="#servicios">Servicios</a>
           </li>
           <li>
-            <a href="#ubicacion">Ubicacion</a>
+            <a href="#ubicacion">Ubicación</a>
           </li>
           <li>
-            <a href="#galeria">Galeria</a>
+            <a href="#galeria">Galería</a>
           </li>
           <li>
             <a href="#resenas">Opiniones</a>
@@ -323,7 +343,7 @@ export default function Home() {
             <div className="bf-field bf-field-popover" ref={guestsPanelRef}>
               <div className="bf-label">Huespedes</div>
               <button type="button" className="bf-trigger" onClick={() => setIsGuestsOpen((prev) => !prev)}>
-                {adults} adultos {children > 0 ? `- ${children} ninos` : ""}
+                {adults} adultos {children > 0 ? `- ${children} niños` : ""}
               </button>
               {isGuestsOpen && (
                 <div className="guest-popover">
@@ -357,7 +377,7 @@ export default function Home() {
             <div className="bf-field rooms">
               <div className="bf-label">Habitaciones</div>
               <select className="bf-select" value={rooms} onChange={(event) => setRooms(Number(event.target.value))}>
-                <option value="1">1 habitacion</option>
+                <option value="1">1 habitación</option>
                 <option value="2">2 habitaciones</option>
                 <option value="3">3 habitaciones</option>
                 <option value="4">4 habitaciones</option>
@@ -426,7 +446,7 @@ export default function Home() {
             </p>
             <p>Ideales para viajes en pareja, en familia o por trabajo.</p>
             <a href="#alojamientos" className="btn-dark">
-              Saber mas
+              Saber más
             </a>
           </div>
           <div className="intro-img reveal d2">
@@ -438,12 +458,12 @@ export default function Home() {
       <section className="alojamientos" id="alojamientos">
         <div className="section-header reveal">
           <p className="section-eyebrow">Nuestros alojamientos</p>
-          <h2 className="section-title">Elige tu opcion ideal</h2>
+          <h2 className="section-title">Elige tu opción ideal</h2>
         </div>
         <div className="cards">
           {[
             ["Estudio", "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80"],
-            ["Habitacion familiar", "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80"],
+            ["Habitación familiar", "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80"],
             ["Habitacion doble", "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80"],
           ].map(([title, image], index) => (
             <article key={title} className={`card reveal d${Math.min(index + 1, 3)}`}>
@@ -470,11 +490,11 @@ export default function Home() {
       <section className="galeria-section" id="galeria">
         <div className="galeria-inner reveal">
           <div className="galeria-head">
-            <p className="section-eyebrow">Galeria</p>
+            <p className="section-eyebrow">Galería</p>
             <h2 className="section-title">Conoce los apartamentos por dentro</h2>
-            <p className="galeria-sub">Desliza para ver mas fotos. Esta seccion queda lista para convertirla en carrusel automatico.</p>
+            <p className="galeria-sub">Desliza para ver más fotos. Esta sección queda lista para convertirla en carrusel automático.</p>
           </div>
-          <div className="galeria-track" aria-label="Galeria de apartamentos">
+          <div className="galeria-track" aria-label="Galería de apartamentos">
             {[
               "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=1200&q=80",
               "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=1200&q=80",
@@ -493,30 +513,51 @@ export default function Home() {
       <section className="resenas" id="resenas">
         <div className="resenas-inner">
           <div className="resenas-header reveal">
-            <p className="section-eyebrow">Lo que dicen nuestros huespedes</p>
+            <p className="section-eyebrow">Lo que dicen nuestros huéspedes</p>
           </div>
           <div className="resenas-grid reveal">
-            <div className="rating-big">
-              <div className="rating-big-num">10</div>
-              <div className="rating-label">Excepcional</div>
-              <div className="rating-count">Basado en resenas recientes</div>
-            </div>
-            <div className="reviews-carousel">
-              <div className="review-card">
-                <div className="review-meta">
-                  <span className="review-badge">{REVIEWS[reviewIndex].title}</span>
-                  <span className="review-score">Puntuacion: {REVIEWS[reviewIndex].score}</span>
-                </div>
-                <p className="review-text">{REVIEWS[reviewIndex].text}</p>
-                <div className="review-author">
-                  {REVIEWS[reviewIndex].author}, {REVIEWS[reviewIndex].country}
-                </div>
-                <div className="review-submeta">
-                  {REVIEWS[reviewIndex].type} - {REVIEWS[reviewIndex].date}
+            <div className="rating-big booking-rating">
+              <div className="booking-rating-brand">Booking.com</div>
+              <div className="booking-rating-row">
+                <div className="rating-big-num">8,5</div>
+                <div>
+                  <div className="rating-label">Muy bien</div>
+                  <div className="rating-count">511 comentarios</div>
                 </div>
               </div>
+            </div>
+            <div className="reviews-carousel">
+              <div
+                className={`reviews-track ${reviewTransition ? "" : "no-transition"}`}
+                style={{ transform: `translateX(-${reviewIndex * 100}%)` }}
+                onTransitionEnd={handleReviewTrackTransitionEnd}
+              >
+                {carouselReviews.map((review, index) => (
+                  <article className="review-card" key={`${review.author}-${review.date}-${index}`}>
+                    <div className="review-meta">
+                      <span className="review-badge">{review.title}</span>
+                      <span className="review-score">Puntuación: {review.score}</span>
+                    </div>
+                    <p className="review-text">{review.text}</p>
+                    <div className="review-author">
+                      {review.author}, {review.country}
+                    </div>
+                    <div className="review-submeta">
+                      {review.type} - {review.date}
+                    </div>
+                    <img
+                      src="/images/rating-number.png"
+                      alt="Valoración 10"
+                      className="review-score-image"
+                      onError={(event) => {
+                        event.currentTarget.style.display = "none";
+                      }}
+                    />
+                  </article>
+                ))}
+              </div>
               <div className="review-controls">
-                <button type="button" className="review-nav-btn" onClick={goToPrevReview} aria-label="Resena anterior">
+                <button type="button" className="review-nav-btn" onClick={goToPrevReview} aria-label="Reseña anterior">
                   ‹
                 </button>
                 <div className="review-dots">
@@ -524,13 +565,16 @@ export default function Home() {
                     <button
                       type="button"
                       key={review.author + review.date}
-                      className={`review-dot ${index === reviewIndex ? "active" : ""}`}
-                      onClick={() => setReviewIndex(index)}
-                      aria-label={`Ir a resena ${index + 1}`}
+                      className={`review-dot ${index === activeReviewIndex ? "active" : ""}`}
+                      onClick={() => {
+                        setReviewTransition(true);
+                        setReviewIndex(REVIEWS.length + index);
+                      }}
+                      aria-label={`Ir a reseña ${index + 1}`}
                     />
                   ))}
                 </div>
-                <button type="button" className="review-nav-btn" onClick={goToNextReview} aria-label="Resena siguiente">
+                <button type="button" className="review-nav-btn" onClick={goToNextReview} aria-label="Reseña siguiente">
                   ›
                 </button>
               </div>
@@ -543,7 +587,7 @@ export default function Home() {
         <div className="demo-calendar-inner">
           <p className="section-eyebrow">Reserva directa</p>
           <h3 className="demo-title">Comprobar disponibilidad</h3>
-          <p className="demo-sub">Consulta disponibilidad y envia tu solicitud sin salir de la web.</p>
+          <p className="demo-sub">Consulta disponibilidad y envía tu solicitud sin salir de la web.</p>
           <form className="direct-booking-form" onSubmit={submitDirectReservation}>
             <div className="demo-form-row">
               <label className="demo-field">
@@ -613,7 +657,7 @@ export default function Home() {
             <a href="#servicios">Servicios</a>
           </li>
           <li>
-            <a href="#ubicacion">Ubicacion</a>
+            <a href="#ubicacion">Ubicación</a>
           </li>
           <li>
             <a href="#resenas">Opiniones</a>

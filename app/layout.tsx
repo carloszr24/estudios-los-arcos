@@ -10,7 +10,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Estudios Los Arcos | Apartamentos en Teruel",
   description:
-    "Alojamiento funcional en Teruel. Reserva tu estancia en Estudios Los Arcos a traves de Booking.",
+    "Alojamiento funcional en Teruel. Reserva tu estancia en Estudios Los Arcos a través de Booking.",
 };
 
 export default function RootLayout({
