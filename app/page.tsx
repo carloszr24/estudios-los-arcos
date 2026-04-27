@@ -497,6 +497,49 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="ubicacion-section" id="ubicacion">
+        <div className="ubicacion-map">
+          <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&q=80" alt="Mapa de Teruel" />
+          <div className="map-pin">●</div>
+        </div>
+        <div className="ubicacion-content reveal">
+          <p className="section-eyebrow">Ubicación</p>
+          <h2 className="section-title">Cerca de todo, pero con tranquilidad</h2>
+          <p className="ubicacion-text">
+            A pocos minutos del centro histórico de Teruel, con acceso sencillo a pie y aparcamiento cercano en la zona.
+          </p>
+          <div className="ubicacion-chip">
+            <strong>9,0</strong>
+            <span>Valoración de ubicación · 511 comentarios</span>
+          </div>
+        </div>
+      </section>
+
+      <section className="servicios-section" id="servicios">
+        <div className="servicios-inner reveal">
+          <div className="servicios-head">
+            <p className="section-eyebrow">Servicios</p>
+            <h2 className="section-title">Todo lo necesario para una estancia cómoda</h2>
+          </div>
+          <div className="servicios-grid">
+            {[
+              "Cocina equipada",
+              "WiFi gratis",
+              "Aire acondicionado",
+              "TV pantalla plana",
+              "Accesible movilidad reducida",
+              "Salón común",
+              "Baño privado",
+              "Habitaciones familiares",
+            ].map((service) => (
+              <div key={service} className="servicio-item">
+                {service}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="galeria-section" id="galeria">
         <div className="galeria-inner reveal">
           <div className="galeria-head">
@@ -516,6 +559,28 @@ export default function Home() {
                 <img src={image} alt={`Imagen apartamento ${index + 1}`} />
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="entorno-section">
+        <div className="entorno-inner reveal">
+          <div className="entorno-text">
+            <p className="section-eyebrow">Entorno</p>
+            <h2 className="section-title">Descubre Teruel</h2>
+            <p>
+              Naturaleza, historia y cultura te esperan. Disfruta del senderismo, la nieve en invierno y del encanto de una
+              ciudad con patrimonio único.
+            </p>
+            <div className="entorno-tags">
+              <span>Senderismo</span>
+              <span>Naturaleza</span>
+              <span>Esquí</span>
+              <span>Centro histórico</span>
+            </div>
+          </div>
+          <div className="entorno-image">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80" alt="Entorno de Teruel" />
           </div>
         </div>
       </section>
