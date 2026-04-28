@@ -527,7 +527,7 @@ export default function Home() {
                   <li>Apartamento privado en edificio</li>
                 </ul>
                 <a href={BOOKING_HOTEL_URL} className="btn-card" target="_blank" rel="noreferrer">
-                  Reservar en Booking
+                  Comprobar disponibilidad
                 </a>
               </div>
             </article>

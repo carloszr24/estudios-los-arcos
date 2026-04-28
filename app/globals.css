@@ -487,6 +487,8 @@ nav {
 
 .card-body {
   padding: 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-title {
@@ -558,6 +560,7 @@ nav {
   font-size: 13px;
   font-weight: 500;
   transition: all 0.2s;
+  margin-top: auto;
 }
 
 .btn-card:hover {
