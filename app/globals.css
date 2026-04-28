@@ -818,57 +818,58 @@ nav {
 .resenas-side {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
   align-self: stretch;
 }
 
 .rating-general-image {
   width: 100%;
+  max-width: 200px;
   height: auto;
   display: block;
   border: none;
   border-radius: 0;
   background: transparent;
+  margin-bottom: 6px;
 }
 
 .booking-logo-slot {
-  min-height: 72px;
   border-radius: 0;
   border: none;
   background: transparent;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   padding: 0;
+  gap: 2px;
 }
 
 .booking-logo-large {
   width: 100%;
-  max-width: 235px;
+  max-width: 200px;
   height: auto;
   object-fit: contain;
   display: block;
 }
 
 .booking-comments-count {
-  margin-top: -10px;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
-  line-height: 1.1;
+  line-height: 1.2;
   color: #173f81;
+  margin: 0;
 }
 
 .google-logo-slot {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: auto;
+  margin-top: 10px;
 }
 
 .google-logo-large {
   width: 100%;
-  max-width: 200px;
+  max-width: 180px;
   height: auto;
   object-fit: contain;
   display: block;
