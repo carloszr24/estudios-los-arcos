@@ -806,7 +806,7 @@ nav {
   display: grid;
   grid-template-columns: 260px 1fr;
   gap: 18px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .review-card {
@@ -819,6 +819,7 @@ nav {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-self: stretch;
 }
 
 .rating-general-image {
@@ -827,7 +828,7 @@ nav {
   display: block;
   border: none;
   border-radius: 0;
-  background: #fff;
+  background: transparent;
 }
 
 .booking-logo-slot {
@@ -851,8 +852,9 @@ nav {
 }
 
 .booking-comments-count {
-  margin-top: -6px;
+  margin-top: -10px;
   font-size: 16px;
+  font-weight: 600;
   line-height: 1.1;
   color: #173f81;
 }
@@ -861,6 +863,7 @@ nav {
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: auto;
 }
 
 .google-logo-large {
