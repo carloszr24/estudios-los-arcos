@@ -477,7 +477,9 @@ nav {
   border: 1px solid #e4e4e4;
   border-radius: 10px;
   overflow: hidden;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card-img {
@@ -489,6 +491,7 @@ nav {
   padding: 24px;
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .card-title {
@@ -501,13 +504,6 @@ nav {
   color: #333;
   font-size: 14px;
   margin-bottom: 8px;
-}
-
-.card-score {
-  color: #7e5b20;
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 12px;
 }
 
 .card-description {

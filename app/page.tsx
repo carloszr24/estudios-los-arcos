@@ -56,7 +56,6 @@ const ROOMS = [
     image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=900&q=80",
     size: "22 m²",
     bed: "1 cama doble",
-    score: "8,1 · 320 comentarios",
     summary:
       "Habitación con baño privado y zona de cocina completa. Incluye entrada independiente, TV de pantalla plana y toda la unidad accesible en silla de ruedas.",
     highlights: ["Zona de cocina privada", "Baño privado", "Vistas", "WiFi gratis"],
@@ -68,7 +67,6 @@ const ROOMS = [
     image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80",
     size: "22 m²",
     bed: "1 cama doble + 1 sofá cama",
-    score: "8,1 · 320 comentarios",
     summary:
       "Apartamento entero con aire acondicionado individual, cocina privada y vistas a la ciudad. Perfecto para una estancia cómoda en pareja o en familia.",
     highlights: ["Apartamento entero", "Cocina privada", "Vistas a la ciudad", "Aire acondicionado", "WiFi gratis"],
@@ -80,7 +78,6 @@ const ROOMS = [
     image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=80",
     size: "22 m²",
     bed: "1 cama doble + 1 sofá cama",
-    score: "8,1 · 320 comentarios",
     summary:
       "Habitación familiar con cocina privada, aire acondicionado y vistas a la ciudad. Equipada para familias con juegos de mesa y barandillas de seguridad para bebés.",
     highlights: ["Cocina privada", "Baño privado", "Vistas a la ciudad", "Aire acondicionado", "WiFi gratis"],
@@ -497,7 +494,6 @@ export default function Home() {
                 <p className="card-meta">
                   <strong>{room.size}</strong> · {room.bed}
                 </p>
-                <p className="card-score">Camas cómodas: {room.score}</p>
                 <p className="card-description">{room.summary}</p>
                 <ul className="card-features card-features-main">
                   {room.highlights.map((feature) => (
