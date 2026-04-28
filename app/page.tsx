@@ -550,14 +550,14 @@ export default function Home() {
         <div className="resenas-inner">
           <div className="resenas-grid reveal">
             <div className="resenas-side">
-              <Image
-                src="/images/rating-general.png"
-                alt="Valoración general"
-                width={520}
-                height={360}
-                className="rating-general-image"
-              />
-              <div className="booking-logo-slot">
+              <div className="booking-block">
+                <Image
+                  src="/images/rating-general.png"
+                  alt="Valoración general"
+                  width={520}
+                  height={360}
+                  className="rating-general-image"
+                />
                 <Image
                   src="/images/logo-booking.png"
                   alt="Logo Booking"
