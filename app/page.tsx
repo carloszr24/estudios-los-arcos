@@ -511,32 +511,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ubicacion-section" id="ubicacion">
-        <div className="ubicacion-map">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1520.4156259531956!2d-1.1088443809215651!3d40.34608926889388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5e73320d7177a5%3A0xf2f0671726916355!2sEstudios%20los%20Arcos%20Teruel!5e0!3m2!1ses!2ses!4v1777355252929!5m2!1ses!2ses"
-            width="600"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Mapa de Estudios Los Arcos Teruel"
-          />
-        </div>
-        <div className="ubicacion-content reveal">
-          <p className="section-eyebrow">Ubicación</p>
-          <h2 className="section-title">Cerca de todo, pero con tranquilidad</h2>
-          <p className="ubicacion-text">
-            A pocos minutos del centro histórico de Teruel, con acceso sencillo a pie y aparcamiento cercano en la zona.
-          </p>
-          <div className="ubicacion-chip">
-            <strong>9,0</strong>
-            <span>Valoración de ubicación · 511 comentarios</span>
-          </div>
-        </div>
-      </section>
-
       <section className="servicios-section" id="servicios">
         <div className="servicios-inner reveal">
           <div className="servicios-head">
@@ -674,6 +648,34 @@ export default function Home() {
         <a href={BOOKING_HOTEL_URL} className="cta-btn" target="_blank" rel="noreferrer">
           Reservar en Booking
         </a>
+      </section>
+
+      <section className="ubicacion-section" id="ubicacion">
+        <div className="ubicacion-map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1520.4156259531956!2d-1.1088443809215651!3d40.34608926889388!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5e73320d7177a5%3A0xf2f0671726916355!2sEstudios%20los%20Arcos%20Teruel!5e0!3m2!1ses!2ses!4v1777355252929!5m2!1ses!2ses"
+            width="600"
+            height="450"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Mapa de Estudios Los Arcos Teruel"
+          />
+        </div>
+        <div className="ubicacion-content reveal">
+          <p className="section-eyebrow">Ubicación</p>
+          <h2 className="section-title">Estamos en el casco histórico de Teruel</h2>
+          <p className="ubicacion-text">
+            Dirección: C. los Baches, 13, 44003 Teruel
+            <br />
+            Teléfono (atención 24 horas): 605 87 25 73
+          </p>
+          <div className="ubicacion-chip">
+            <strong>9,0</strong>
+            <span>Valoración de ubicación · 511 comentarios</span>
+          </div>
+        </div>
       </section>
 
       <footer className="footer-nav" id="contacto">
