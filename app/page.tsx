@@ -316,28 +316,8 @@ export default function Home() {
             priority
           />
         </div>
-        <ul className="nav-links">
-          <li>
-            <a href="#alojamientos">Apartamentos</a>
-          </li>
-          <li>
-            <a href="#servicios">Servicios</a>
-          </li>
-          <li>
-            <a href="#ubicacion">Ubicación</a>
-          </li>
-          <li>
-            <a href="#galeria">Galería</a>
-          </li>
-          <li>
-            <a href="#resenas">Opiniones</a>
-          </li>
-          <li>
-            <a href="#contacto">Contacto</a>
-          </li>
-        </ul>
         <a href={BOOKING_HOTEL_URL} className="nav-reserve" target="_blank" rel="noreferrer">
-          Reservar ahora
+          HAZ TU RESERVA
         </a>
       </nav>
 

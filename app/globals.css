@@ -31,13 +31,15 @@ nav {
   height: 84px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .nav-logo {
   display: flex;
   align-items: center;
   gap: 0;
+  justify-content: center;
+  width: 100%;
 }
 
 .brand-logo {
@@ -68,16 +70,31 @@ nav {
 }
 
 .nav-reserve {
-  padding: 9px 16px;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: 500;
+  padding: 11px 18px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  border: 1px solid rgba(200, 151, 58, 0.65);
+  background: linear-gradient(135deg, #d6ac5f 0%, #b88936 52%, #9b6f27 100%);
+  box-shadow: 0 10px 24px rgba(154, 108, 33, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .nav-reserve:hover,
 .bf-btn:hover,
 .cta-btn:hover {
   background: #333;
+}
+
+.nav-reserve:hover {
+  transform: translateY(calc(-50% - 1px));
+  filter: brightness(1.06);
+  box-shadow: 0 14px 28px rgba(154, 108, 33, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 /* ── HERO ── */
@@ -1063,6 +1080,13 @@ nav {
 
   .brand-logo {
     height: 56px;
+  }
+
+  .nav-reserve {
+    right: 12px;
+    padding: 9px 13px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
   }
 
   .review-score-image {
