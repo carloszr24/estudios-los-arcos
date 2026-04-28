@@ -831,7 +831,7 @@ nav {
 }
 
 .booking-logo-slot {
-  min-height: 84px;
+  min-height: 72px;
   border-radius: 0;
   border: none;
   background: transparent;
@@ -851,7 +851,7 @@ nav {
 }
 
 .booking-comments-count {
-  margin-top: 2px;
+  margin-top: -6px;
   font-size: 16px;
   line-height: 1.1;
   color: #173f81;
@@ -880,12 +880,22 @@ nav {
 
 .reviews-carousel {
   width: 100%;
+  overflow: hidden;
 }
 
-.reviews-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+.reviews-track {
+  display: flex;
+  transition: transform 0.45s ease;
+  margin: 0 -6px;
+}
+
+.reviews-track.no-transition {
+  transition: none;
+}
+
+.review-slide {
+  padding: 0 6px;
+  flex-shrink: 0;
 }
 
 .review-meta {
@@ -1127,10 +1137,6 @@ nav {
   }
 
   .resenas-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .reviews-grid {
     grid-template-columns: 1fr;
   }
 

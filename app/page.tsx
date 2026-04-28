@@ -174,10 +174,13 @@ export default function Home() {
   const [checkinDisplay, setCheckinDisplay] = useState("");
   const [checkoutDisplay, setCheckoutDisplay] = useState("");
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
-  const [reviewIndex, setReviewIndex] = useState(0);
+  const [reviewIndex, setReviewIndex] = useState(REVIEWS.length);
+  const [reviewTransition, setReviewTransition] = useState(true);
+  const [cardsPerView, setCardsPerView] = useState(4);
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
   const [teruelSlideIndex, setTeruelSlideIndex] = useState(0);
   const guestsPanelRef = useRef<HTMLDivElement>(null);
+  const carouselReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -237,10 +240,48 @@ export default function Home() {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      setReviewTransition(true);
       setReviewIndex((current) => current + 1);
     }, 3200);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth < 900) {
+        setCardsPerView(1);
+        return;
+      }
+      if (window.innerWidth < 1260) {
+        setCardsPerView(2);
+        return;
+      }
+      setCardsPerView(4);
+    };
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const handleReviewTrackTransitionEnd = () => {
+    if (reviewIndex >= REVIEWS.length * 2) {
+      setReviewTransition(false);
+      setReviewIndex(REVIEWS.length);
+      return;
+    }
+    if (reviewIndex < REVIEWS.length) {
+      setReviewTransition(false);
+      setReviewIndex(REVIEWS.length * 2 - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (reviewTransition) return;
+    const id = requestAnimationFrame(() => {
+      setReviewTransition(true);
+    });
+    return () => cancelAnimationFrame(id);
+  }, [reviewTransition]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -540,11 +581,14 @@ export default function Home() {
               </div>
             </div>
             <div className="reviews-carousel">
-              <div className="reviews-grid">
-                {Array.from({ length: 4 }).map((_, offset) => {
-                  const review = REVIEWS[(reviewIndex + offset) % REVIEWS.length];
-                  return (
-                    <article className="review-card" key={`${review.author}-${review.date}-${offset}`}>
+              <div
+                className={`reviews-track ${reviewTransition ? "" : "no-transition"}`}
+                style={{ transform: `translateX(-${reviewIndex * (100 / cardsPerView)}%)` }}
+                onTransitionEnd={handleReviewTrackTransitionEnd}
+              >
+                {carouselReviews.map((review, index) => (
+                  <div className="review-slide" key={`${review.author}-${review.date}-${index}`} style={{ width: `${100 / cardsPerView}%` }}>
+                    <article className="review-card">
                       <div className="review-meta">
                         <span className="review-badge">{review.title}</span>
                       </div>
@@ -564,8 +608,8 @@ export default function Home() {
                         }}
                       />
                     </article>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
             </div>
           </div>
