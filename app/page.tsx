@@ -306,6 +306,14 @@ export default function Home() {
   return (
     <>
       <nav>
+        <a href="tel:+34605872573" className="nav-phone" aria-label="Llamar al 605 87 25 73">
+          <span className="nav-phone-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" role="img" focusable="false">
+              <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.49c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.19 2.2z" />
+            </svg>
+          </span>
+          <span className="nav-phone-text">605 87 25 73</span>
+        </a>
         <div className="nav-logo">
           <Image
             src="/images/logo-estudio-arcos.png"
