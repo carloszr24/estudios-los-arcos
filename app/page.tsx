@@ -174,13 +174,10 @@ export default function Home() {
   const [checkinDisplay, setCheckinDisplay] = useState("");
   const [checkoutDisplay, setCheckoutDisplay] = useState("");
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
-  const [reviewIndex, setReviewIndex] = useState(REVIEWS.length);
-  const [reviewTransition, setReviewTransition] = useState(true);
-  const [cardsPerView, setCardsPerView] = useState(2);
+  const [reviewIndex, setReviewIndex] = useState(0);
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
   const [teruelSlideIndex, setTeruelSlideIndex] = useState(0);
   const guestsPanelRef = useRef<HTMLDivElement>(null);
-  const carouselReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -240,9 +237,8 @@ export default function Home() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setReviewTransition(true);
       setReviewIndex((current) => current + 1);
-    }, 5000);
+    }, 3200);
     return () => clearInterval(interval);
   }, []);
 
@@ -252,40 +248,6 @@ export default function Home() {
     }, 5500);
     return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    const onResize = () => {
-      setCardsPerView(window.innerWidth < 900 ? 1 : 2);
-    };
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-
-  const goToPrevReview = () => {
-    setReviewTransition(true);
-    setReviewIndex((current) => current - 1);
-  };
-
-  const goToNextReview = () => {
-    setReviewTransition(true);
-    setReviewIndex((current) => current + 1);
-  };
-
-  const activeReviewIndex = ((reviewIndex % REVIEWS.length) + REVIEWS.length) % REVIEWS.length;
-
-  const handleReviewTrackTransitionEnd = () => {
-    if (reviewIndex >= REVIEWS.length * 2) {
-      setReviewTransition(false);
-      setReviewIndex(REVIEWS.length);
-      return;
-    }
-
-    if (reviewIndex < REVIEWS.length) {
-      setReviewTransition(false);
-      setReviewIndex(REVIEWS.length * 2 - 1);
-    }
-  };
 
   const goToPrevTeruelSlide = () => {
     setTeruelSlideIndex((current) => (current - 1 + TERUEL_SLIDES.length) % TERUEL_SLIDES.length);
@@ -561,25 +523,28 @@ export default function Home() {
                 <Image
                   src="/images/logo-booking.png"
                   alt="Logo Booking"
-                  width={320}
-                  height={88}
+                  width={360}
+                  height={96}
                   className="booking-logo-large"
+                />
+                <p className="booking-comments-count">512 comentarios</p>
+              </div>
+              <div className="google-logo-slot">
+                <Image
+                  src="/images/logo-google.png"
+                  alt="Google"
+                  width={280}
+                  height={280}
+                  className="google-logo-large"
                 />
               </div>
             </div>
             <div className="reviews-carousel">
-              <div
-                className={`reviews-track ${reviewTransition ? "" : "no-transition"}`}
-                style={{ transform: `translateX(-${reviewIndex * (100 / cardsPerView)}%)` }}
-                onTransitionEnd={handleReviewTrackTransitionEnd}
-              >
-                {carouselReviews.map((review, index) => (
-                  <div
-                    className="review-slide"
-                    key={`${review.author}-${review.date}-${index}`}
-                    style={{ width: `${100 / cardsPerView}%` }}
-                  >
-                    <article className="review-card">
+              <div className="reviews-grid">
+                {Array.from({ length: 4 }).map((_, offset) => {
+                  const review = REVIEWS[(reviewIndex + offset) % REVIEWS.length];
+                  return (
+                    <article className="review-card" key={`${review.author}-${review.date}-${offset}`}>
                       <div className="review-meta">
                         <span className="review-badge">{review.title}</span>
                       </div>
@@ -599,30 +564,8 @@ export default function Home() {
                         }}
                       />
                     </article>
-                  </div>
-                ))}
-              </div>
-              <div className="review-controls">
-                <button type="button" className="review-nav-btn" onClick={goToPrevReview} aria-label="Reseña anterior">
-                  ‹
-                </button>
-                <div className="review-dots">
-                  {REVIEWS.map((review, index) => (
-                    <button
-                      type="button"
-                      key={review.author + review.date}
-                      className={`review-dot ${index === activeReviewIndex ? "active" : ""}`}
-                      onClick={() => {
-                        setReviewTransition(true);
-                        setReviewIndex(REVIEWS.length + index);
-                      }}
-                      aria-label={`Ir a reseña ${index + 1}`}
-                    />
-                  ))}
-                </div>
-                <button type="button" className="review-nav-btn" onClick={goToNextReview} aria-label="Reseña siguiente">
-                  ›
-                </button>
+                  );
+                })}
               </div>
             </div>
           </div>
