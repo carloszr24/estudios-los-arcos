@@ -50,6 +50,44 @@ const TERUEL_SLIDES = [
     alt: "Teruel carrusel 6",
   },
 ];
+const ROOMS = [
+  {
+    name: "Habitación Doble",
+    image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=900&q=80",
+    size: "22 m²",
+    bed: "1 cama doble",
+    score: "8,1 · 320 comentarios",
+    summary:
+      "Habitación con baño privado y zona de cocina completa. Incluye entrada independiente, TV de pantalla plana y toda la unidad accesible en silla de ruedas.",
+    highlights: ["Zona de cocina privada", "Baño privado", "Vistas", "WiFi gratis"],
+    kitchen: ["Nevera", "Cafetera", "Microondas", "Utensilios", "Horno", "Fogones", "Tostadora"],
+    bathroom: ["Ducha a ras de suelo", "Artículos de aseo gratis", "Toallas", "Papel higiénico"],
+  },
+  {
+    name: "Apartamento Estudio",
+    image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80",
+    size: "22 m²",
+    bed: "1 cama doble + 1 sofá cama",
+    score: "8,1 · 320 comentarios",
+    summary:
+      "Apartamento entero con aire acondicionado individual, cocina privada y vistas a la ciudad. Perfecto para una estancia cómoda en pareja o en familia.",
+    highlights: ["Apartamento entero", "Cocina privada", "Vistas a la ciudad", "Aire acondicionado", "WiFi gratis"],
+    kitchen: ["Nevera", "Cafetera", "Microondas", "Utensilios", "Horno", "Fogones", "Tostadora"],
+    bathroom: ["Ducha a ras de suelo", "Artículos de aseo gratis", "Toallas", "Papel higiénico"],
+  },
+  {
+    name: "Habitación Familiar con baño privado",
+    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=80",
+    size: "22 m²",
+    bed: "1 cama doble + 1 sofá cama",
+    score: "8,1 · 320 comentarios",
+    summary:
+      "Habitación familiar con cocina privada, aire acondicionado y vistas a la ciudad. Equipada para familias con juegos de mesa y barandillas de seguridad para bebés.",
+    highlights: ["Cocina privada", "Baño privado", "Vistas a la ciudad", "Aire acondicionado", "WiFi gratis"],
+    kitchen: ["Nevera", "Cafetera", "Microondas", "Utensilios", "Horno", "Fogones", "Tostadora"],
+    bathroom: ["Ducha a ras de suelo", "Artículos de aseo gratis", "Toallas", "Papel higiénico"],
+  },
+];
 const REVIEWS = [
   {
     author: "Xsanz",
@@ -449,22 +487,44 @@ export default function Home() {
           <h2 className="section-title">Elige tu opción ideal</h2>
         </div>
         <div className="cards">
-          {[
-            ["Estudio", "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=80"],
-            ["Habitación familiar", "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80"],
-            ["Habitacion doble", "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&q=80"],
-          ].map(([title, image], index) => (
-            <article key={title} className={`card reveal d${Math.min(index + 1, 3)}`}>
+          {ROOMS.map((room, index) => (
+            <article key={room.name} className={`card reveal d${Math.min(index + 1, 3)}`}>
               <div className="card-img">
-                <img src={image} alt={title} />
+                <img src={room.image} alt={room.name} />
               </div>
               <div className="card-body">
-                <div className="card-title">{title}</div>
-                <ul className="card-features">
-                  <li>1 cama doble + sofa cama</li>
-                  <li>Cocina equipada</li>
-                  <li>Bano privado</li>
+                <div className="card-title">{room.name}</div>
+                <p className="card-meta">
+                  <strong>{room.size}</strong> · {room.bed}
+                </p>
+                <p className="card-score">Camas cómodas: {room.score}</p>
+                <p className="card-description">{room.summary}</p>
+                <ul className="card-features card-features-main">
+                  {room.highlights.map((feature) => (
+                    <li key={feature}>{feature}</li>
+                  ))}
+                </ul>
+                <div className="card-subsection">
+                  <p>Cocina</p>
+                  <ul className="card-features">
+                    {room.kitchen.map((item) => (
+                      <li key={`${room.name}-${item}`}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="card-subsection">
+                  <p>Baño</p>
+                  <ul className="card-features">
+                    {room.bathroom.map((item) => (
+                      <li key={`${room.name}-bath-${item}`}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <ul className="card-features card-features-main">
                   <li>TV de pantalla plana</li>
+                  <li>Entrada privada</li>
+                  <li>Zona de comedor</li>
+                  <li>Apartamento privado en edificio</li>
                 </ul>
                 <a href={BOOKING_HOTEL_URL} className="btn-card" target="_blank" rel="noreferrer">
                   Reservar en Booking
