@@ -511,31 +511,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="servicios-section" id="servicios">
-        <div className="servicios-inner reveal">
-          <div className="servicios-head">
-            <p className="section-eyebrow">Servicios</p>
-            <h2 className="section-title">Todo lo necesario para una estancia cómoda</h2>
-          </div>
-          <div className="servicios-grid">
-            {[
-              "Cocina equipada",
-              "WiFi gratis",
-              "Aire acondicionado",
-              "TV pantalla plana",
-              "Accesible movilidad reducida",
-              "Salón común",
-              "Baño privado",
-              "Habitaciones familiares",
-            ].map((service) => (
-              <div key={service} className="servicio-item">
-                {service}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="teruel-carousel-section" id="galeria" aria-label="Carrusel de Teruel">
         <div className="teruel-carousel-track">
           {TERUEL_SLIDES.map((slide, index) => (
@@ -640,16 +615,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="cta-final" id="cta">
-        <div className="cta-text">
-          <div className="cta-text-main">Todo listo para tu estancia en Teruel</div>
-          <div className="cta-text-sub">Apartamentos funcionales con todo lo que necesitas.</div>
-        </div>
-        <a href={BOOKING_HOTEL_URL} className="cta-btn" target="_blank" rel="noreferrer">
-          Reservar en Booking
-        </a>
-      </section>
-
       <section className="ubicacion-section" id="ubicacion">
         <div className="ubicacion-map">
           <iframe
@@ -678,6 +643,16 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="cta-final" id="cta">
+        <div className="cta-text">
+          <div className="cta-text-main">Todo listo para tu estancia en Teruel</div>
+          <div className="cta-text-sub">Apartamentos funcionales con todo lo que necesitas.</div>
+        </div>
+        <a href={BOOKING_HOTEL_URL} className="cta-btn" target="_blank" rel="noreferrer">
+          Reservar en Booking
+        </a>
+      </section>
+
       <footer className="footer-nav" id="contacto">
         <div className="footer-brand">
           <Image
@@ -692,9 +667,6 @@ export default function Home() {
         <ul className="footer-links">
           <li>
             <a href="#alojamientos">Apartamentos</a>
-          </li>
-          <li>
-            <a href="#servicios">Servicios</a>
           </li>
           <li>
             <a href="#ubicacion">Ubicación</a>
