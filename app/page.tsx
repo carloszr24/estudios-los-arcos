@@ -53,7 +53,7 @@ const TERUEL_SLIDES = [
 const ROOMS = [
   {
     name: "Habitación Doble",
-    image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=900&q=80",
+    image: "/images/habitacion-doble.jpg",
     size: "22 m²",
     bed: "1 cama doble",
     summary:
@@ -64,7 +64,7 @@ const ROOMS = [
   },
   {
     name: "Apartamento Estudio",
-    image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&q=80",
+    image: "/images/apartamento-estudio.jpg",
     size: "22 m²",
     bed: "1 cama doble + 1 sofá cama",
     summary:
@@ -75,7 +75,7 @@ const ROOMS = [
   },
   {
     name: "Habitación Familiar con baño privado",
-    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=900&q=80",
+    image: "/images/habitacion-familiar.jpg",
     size: "22 m²",
     bed: "1 cama doble + 1 sofá cama",
     summary:
