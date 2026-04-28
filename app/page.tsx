@@ -50,6 +50,7 @@ const TERUEL_SLIDES = [
     alt: "Teruel carrusel 6",
   },
 ];
+const TERUEL_HEADLINE = "TU FRASE AQUI";
 const ROOMS = [
   {
     name: "Habitación Doble",
@@ -526,6 +527,9 @@ export default function Home() {
               <img src={slide.src} alt={slide.alt} />
             </div>
           ))}
+          <div className="teruel-headline" aria-live="polite">
+            {TERUEL_HEADLINE}
+          </div>
           <button type="button" className="teruel-nav teruel-nav-prev" onClick={goToPrevTeruelSlide} aria-label="Imagen anterior">
             ‹
           </button>
