@@ -125,10 +125,19 @@ const REVIEWS = [
   },
 ];
 
+function formatDate(value: string) {
+  if (!value) return "";
+  const [y, m, d] = value.split("-");
+  const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  return `${parseInt(d, 10)} ${months[parseInt(m, 10) - 1]} ${y}`;
+}
+
 export default function Home() {
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [rooms, setRooms] = useState(1);
+  const [checkinDisplay, setCheckinDisplay] = useState("");
+  const [checkoutDisplay, setCheckoutDisplay] = useState("");
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
   const [reviewIndex, setReviewIndex] = useState(REVIEWS.length);
   const [reviewTransition, setReviewTransition] = useState(true);
@@ -323,80 +332,112 @@ export default function Home() {
         </div>
 
         <div className="hero-content">
-          <h1 className="hero-title">Teruel desde otro punto de vista</h1>
-          <form className="booking-form" onSubmit={handleBookingSubmit}>
-            <input type="hidden" name="lang" value="es" />
-            <input type="hidden" name="selected_currency" value="EUR" />
-            <input type="hidden" name="do_availability_check" value="1" />
-            <input type="hidden" name="hp_avform" value="1" />
-            <input type="hidden" name="hp_group_set" value="0" />
-            <input type="hidden" name="origin" value="hp" />
-            <input type="hidden" name="src" value="hotel" />
-            <input type="hidden" name="type" value="total" />
-            <input type="hidden" name="sb_price_type" value="total" />
-            <input type="hidden" name="dest_id" value={BOOKING_DEST_ID} />
-            <input type="hidden" name="dest_type" value="city" />
-            <input type="hidden" name="group_adults" value={adults} />
-            <input type="hidden" name="group_children" value={children} />
-            <input type="hidden" name="no_rooms" value={rooms} />
-            <div className="bf-field">
-              <div className="bf-label">Entrada</div>
-              <input type="date" className="bf-input" name="checkin" />
-            </div>
-            <div className="bf-field">
-              <div className="bf-label">Salida</div>
-              <input type="date" className="bf-input" name="checkout" />
-            </div>
-            <div className="bf-field bf-field-popover" ref={guestsPanelRef}>
-              <div className="bf-label">Huespedes</div>
-              <button type="button" className="bf-trigger" onClick={() => setIsGuestsOpen((prev) => !prev)}>
-                {adults} adultos {children > 0 ? `- ${children} niños` : ""}
+          <p className="hero-eyebrow">Tu alojamiento en Teruel</p>
+          <h1 className="hero-title">
+            Teruel desde <em>otro punto</em>
+            <br />
+            de vista
+          </h1>
+
+          <div className="booking-card">
+            <form className="booking-inner" onSubmit={handleBookingSubmit}>
+              <input type="hidden" name="lang" value="es" />
+              <input type="hidden" name="selected_currency" value="EUR" />
+              <input type="hidden" name="do_availability_check" value="1" />
+              <input type="hidden" name="hp_avform" value="1" />
+              <input type="hidden" name="hp_group_set" value="0" />
+              <input type="hidden" name="origin" value="hp" />
+              <input type="hidden" name="src" value="hotel" />
+              <input type="hidden" name="type" value="total" />
+              <input type="hidden" name="sb_price_type" value="total" />
+              <input type="hidden" name="dest_id" value={BOOKING_DEST_ID} />
+              <input type="hidden" name="dest_type" value="city" />
+              <input type="hidden" name="group_adults" value={adults} />
+              <input type="hidden" name="group_children" value={children} />
+              <input type="hidden" name="no_rooms" value={rooms} />
+
+              <div className="bf-cell">
+                <span className="bf-label">Entrada</span>
+                <span className={`bf-value ${!checkinDisplay ? "placeholder" : ""}`}>{checkinDisplay || "Selecciona fecha"}</span>
+                <input
+                  type="date"
+                  name="checkin"
+                  className="bf-date-input"
+                  onChange={(e) => setCheckinDisplay(formatDate(e.target.value))}
+                />
+              </div>
+
+              <div className="bf-divider" />
+
+              <div className="bf-cell">
+                <span className="bf-label">Salida</span>
+                <span className={`bf-value ${!checkoutDisplay ? "placeholder" : ""}`}>
+                  {checkoutDisplay || "Selecciona fecha"}
+                </span>
+                <input
+                  type="date"
+                  name="checkout"
+                  className="bf-date-input"
+                  onChange={(e) => setCheckoutDisplay(formatDate(e.target.value))}
+                />
+              </div>
+
+              <div className="bf-divider" />
+
+              <div className="bf-cell bf-cell-guests" ref={guestsPanelRef} onClick={() => setIsGuestsOpen((p) => !p)}>
+                <span className="bf-label">Huéspedes</span>
+                <span className="bf-value">
+                  {adults} adulto{adults !== 1 ? "s" : ""}
+                  {children > 0 ? ` · ${children} niño${children !== 1 ? "s" : ""}` : ""}
+                </span>
+
+                {isGuestsOpen && (
+                  <div className="guests-popover" onClick={(e) => e.stopPropagation()}>
+                    {[
+                      { key: "adults", label: "Adultos", sub: "13 años o más", min: 1, max: 8, value: adults, set: setAdults },
+                      { key: "children", label: "Niños", sub: "2 – 12 años", min: 0, max: 6, value: children, set: setChildren },
+                      { key: "rooms", label: "Habitaciones", sub: null, min: 1, max: 4, value: rooms, set: setRooms },
+                    ].map(({ key, label, sub, min, max, value, set }) => (
+                      <div className="guest-row" key={key}>
+                        <div>
+                          <div className="guest-label">{label}</div>
+                          {sub && <div className="guest-sub">{sub}</div>}
+                        </div>
+                        <div className="guest-ctrl">
+                          <button
+                            type="button"
+                            className="g-btn"
+                            onClick={() => set((v) => Math.max(min, v - 1))}
+                            disabled={value <= min}
+                          >
+                            −
+                          </button>
+                          <span className="g-count">{value}</span>
+                          <button
+                            type="button"
+                            className="g-btn"
+                            onClick={() => set((v) => Math.min(max, v + 1))}
+                            disabled={value >= max}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <button type="submit" className="bf-search-btn">
+                <span className="bf-search-icon">↗</span>
+                Buscar disponibilidad
               </button>
-              {isGuestsOpen && (
-                <div className="guest-popover">
-                  <div className="guest-row">
-                    <span>Adultos</span>
-                    <div className="guest-controls">
-                      <button type="button" onClick={() => setAdults((value) => Math.max(1, value - 1))}>
-                        -
-                      </button>
-                      <strong>{adults}</strong>
-                      <button type="button" onClick={() => setAdults((value) => Math.min(8, value + 1))}>
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <div className="guest-row">
-                    <span>Ninos</span>
-                    <div className="guest-controls">
-                      <button type="button" onClick={() => setChildren((value) => Math.max(0, value - 1))}>
-                        -
-                      </button>
-                      <strong>{children}</strong>
-                      <button type="button" onClick={() => setChildren((value) => Math.min(6, value + 1))}>
-                        +
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="bf-field rooms">
-              <div className="bf-label">Habitaciones</div>
-              <select className="bf-select" value={rooms} onChange={(event) => setRooms(Number(event.target.value))}>
-                <option value="1">1 habitación</option>
-                <option value="2">2 habitaciones</option>
-                <option value="3">3 habitaciones</option>
-                <option value="4">4 habitaciones</option>
-              </select>
-            </div>
-            <button type="submit" className="bf-btn">
-              Buscar en Booking
-            </button>
-          </form>
+            </form>
+          </div>
+
           <div className="hero-actions">
-            <a href="#alojamientos" className="btn-outline">
-              Ver apartamentos
+            <a href="#alojamientos" className="hero-cta">
+              Elige tu habitación <span className="cta-arrow">→</span>
             </a>
           </div>
         </div>

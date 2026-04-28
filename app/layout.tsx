@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-sans",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-display",
 });
 
 export const metadata: Metadata = {
-  title: "Estudios Los Arcos | Apartamentos en Teruel",
+  title: "Estudios Los Arcos",
   description:
     "Alojamiento funcional en Teruel. Reserva tu estancia en Estudios Los Arcos a través de Booking.",
 };
@@ -19,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={`${inter.variable}`}>
+    <html lang="es" className={`${inter.variable} ${cormorant.variable}`}>
       <body>{children}</body>
     </html>
   );
