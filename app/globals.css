@@ -886,15 +886,14 @@ nav {
 .reviews-track {
   display: flex;
   transition: transform 0.45s ease;
-  margin: 0 -6px;
 }
 
 .reviews-track.no-transition {
   transition: none;
 }
 
-.review-slide {
-  padding: 0 6px;
+.review-page {
+  width: 100%;
   flex-shrink: 0;
 }
 
@@ -1137,6 +1136,10 @@ nav {
   }
 
   .resenas-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-page .reviews-grid {
     grid-template-columns: 1fr;
   }
 

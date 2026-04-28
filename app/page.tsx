@@ -160,6 +160,20 @@ const REVIEWS = [
   },
 ];
 
+const REVIEWS_PER_PAGE = 4;
+
+function buildReviewPages() {
+  const pages: (typeof REVIEWS)[] = [];
+  for (let i = 0; i < REVIEWS.length; i += REVIEWS_PER_PAGE) {
+    const page = REVIEWS.slice(i, i + REVIEWS_PER_PAGE);
+    if (page.length < REVIEWS_PER_PAGE) {
+      page.push(...REVIEWS.slice(0, REVIEWS_PER_PAGE - page.length));
+    }
+    pages.push(page);
+  }
+  return pages;
+}
+
 function formatDate(value: string) {
   if (!value) return "";
   const [y, m, d] = value.split("-");
@@ -174,13 +188,13 @@ export default function Home() {
   const [checkinDisplay, setCheckinDisplay] = useState("");
   const [checkoutDisplay, setCheckoutDisplay] = useState("");
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
-  const [reviewIndex, setReviewIndex] = useState(REVIEWS.length);
+  const reviewPages = buildReviewPages();
+  const [reviewPageIndex, setReviewPageIndex] = useState(reviewPages.length);
   const [reviewTransition, setReviewTransition] = useState(true);
-  const [cardsPerView, setCardsPerView] = useState(4);
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
   const [teruelSlideIndex, setTeruelSlideIndex] = useState(0);
   const guestsPanelRef = useRef<HTMLDivElement>(null);
-  const carouselReviews = [...REVIEWS, ...REVIEWS, ...REVIEWS];
+  const carouselReviewPages = [...reviewPages, ...reviewPages, ...reviewPages];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -241,37 +255,20 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setReviewTransition(true);
-      setReviewIndex((current) => current + 1);
+      setReviewPageIndex((current) => current + 1);
     }, 3200);
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    const onResize = () => {
-      if (window.innerWidth < 900) {
-        setCardsPerView(1);
-        return;
-      }
-      if (window.innerWidth < 1260) {
-        setCardsPerView(2);
-        return;
-      }
-      setCardsPerView(4);
-    };
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-
   const handleReviewTrackTransitionEnd = () => {
-    if (reviewIndex >= REVIEWS.length * 2) {
+    if (reviewPageIndex >= reviewPages.length * 2) {
       setReviewTransition(false);
-      setReviewIndex(REVIEWS.length);
+      setReviewPageIndex(reviewPages.length);
       return;
     }
-    if (reviewIndex < REVIEWS.length) {
+    if (reviewPageIndex < reviewPages.length) {
       setReviewTransition(false);
-      setReviewIndex(REVIEWS.length * 2 - 1);
+      setReviewPageIndex(reviewPages.length * 2 - 1);
     }
   };
 
@@ -583,31 +580,35 @@ export default function Home() {
             <div className="reviews-carousel">
               <div
                 className={`reviews-track ${reviewTransition ? "" : "no-transition"}`}
-                style={{ transform: `translateX(-${reviewIndex * (100 / cardsPerView)}%)` }}
+                style={{ transform: `translateX(-${reviewPageIndex * 100}%)` }}
                 onTransitionEnd={handleReviewTrackTransitionEnd}
               >
-                {carouselReviews.map((review, index) => (
-                  <div className="review-slide" key={`${review.author}-${review.date}-${index}`} style={{ width: `${100 / cardsPerView}%` }}>
-                    <article className="review-card">
-                      <div className="review-meta">
-                        <span className="review-badge">{review.title}</span>
-                      </div>
-                      <p className="review-text">{review.text}</p>
-                      <div className="review-author">
-                        {review.author}, {review.country}
-                      </div>
-                      <div className="review-submeta">
-                        {review.type} - {review.date}
-                      </div>
-                      <img
-                        src="/images/rating-number.png"
-                        alt="Valoración 10"
-                        className="review-score-image"
-                        onError={(event) => {
-                          event.currentTarget.style.display = "none";
-                        }}
-                      />
-                    </article>
+                {carouselReviewPages.map((page, pageIndex) => (
+                  <div className="review-page" key={`page-${pageIndex}`}>
+                    <div className="reviews-grid">
+                      {page.map((review, index) => (
+                        <article className="review-card" key={`${review.author}-${review.date}-${index}`}>
+                          <div className="review-meta">
+                            <span className="review-badge">{review.title}</span>
+                          </div>
+                          <p className="review-text">{review.text}</p>
+                          <div className="review-author">
+                            {review.author}, {review.country}
+                          </div>
+                          <div className="review-submeta">
+                            {review.type} - {review.date}
+                          </div>
+                          <img
+                            src="/images/rating-number.png"
+                            alt="Valoración 10"
+                            className="review-score-image"
+                            onError={(event) => {
+                              event.currentTarget.style.display = "none";
+                            }}
+                          />
+                        </article>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
