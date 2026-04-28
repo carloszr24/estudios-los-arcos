@@ -549,17 +549,23 @@ export default function Home() {
       <section className="resenas" id="resenas">
         <div className="resenas-inner">
           <div className="resenas-grid reveal">
-            <div className="rating-big booking-rating">
+            <div className="resenas-side">
               <Image
-                src="/images/booking-logo.png"
-                alt="Booking.com"
-                width={160}
-                height={28}
-                className="booking-logo"
+                src="/images/rating-general.png"
+                alt="Valoración general"
+                width={520}
+                height={360}
+                className="rating-general-image"
               />
-              <div className="rating-big-num">8,5</div>
-              <div className="rating-label">Muy bien</div>
-              <div className="rating-count">511 comentarios</div>
+              <div className="booking-logo-slot">
+                <Image
+                  src="/images/logo-booking.png"
+                  alt="Logo Booking"
+                  width={320}
+                  height={88}
+                  className="booking-logo-large"
+                />
+              </div>
             </div>
             <div className="reviews-carousel">
               <div
