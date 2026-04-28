@@ -827,7 +827,7 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
+  gap: 8px;
 }
 
 .booking-block > * {
@@ -872,7 +872,7 @@ nav {
 
 .google-logo-large {
   width: 100%;
-  max-width: 170px;
+  max-width: 190px;
   height: auto;
   object-fit: contain;
   display: block;
