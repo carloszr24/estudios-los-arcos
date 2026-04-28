@@ -825,27 +825,27 @@ nav {
   width: 100%;
   height: auto;
   display: block;
-  border: 1px solid #e4e4e4;
-  border-radius: 10px;
+  border: none;
+  border-radius: 0;
   background: #fff;
 }
 
 .booking-logo-slot {
   min-height: 112px;
-  border-radius: 10px;
-  border: 1px solid #e4e4e4;
+  border-radius: 0;
+  border: none;
   background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 14px 18px;
+  padding: 0;
 }
 
 .booking-logo-large {
   width: 100%;
-  max-width: 250px;
+  max-width: none;
   height: auto;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 
