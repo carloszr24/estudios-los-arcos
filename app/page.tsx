@@ -8,19 +8,19 @@ const BOOKING_AVAILABILITY_ANCHOR = "group_recommendation";
 const BOOKING_DEST_ID = "-404164";
 const HERO_SLIDES = [
   {
-    src: "/images/entrada-los-arcos.jpg",
+    src: "/images/entrada-los-arcos.png",
     alt: "Entrada de Estudios Los Arcos",
   },
   {
-    src: "/images/comedor-los-arcos.jpg",
+    src: "/images/comedor-los-arcos.png",
     alt: "Comedor de Estudios Los Arcos",
   },
   {
-    src: "/images/habitacion-los-arcos.jpg",
+    src: "/images/habitacion-los-arcos.png",
     alt: "Habitación de Estudios Los Arcos",
   },
   {
-    src: "/images/vistas-teruel.jpg",
+    src: "/images/vistas-teruel.png",
     alt: "Vistas de Teruel",
   },
 ];
