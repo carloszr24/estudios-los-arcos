@@ -1413,6 +1413,142 @@ nav {
   color: #fff;
 }
 
+.availability-demo-primary.is-disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.availability-select-form {
+  margin-top: 14px;
+}
+
+.availability-select-btn {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: #2f704f;
+  color: #fff;
+  font-weight: 700;
+  padding: 11px 14px;
+  cursor: pointer;
+}
+
+.booking-flow-page {
+  min-height: 100vh;
+  padding: 48px 20px;
+  background: linear-gradient(180deg, #f7f4ef 0%, #ffffff 100%);
+}
+
+.booking-flow-card {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid #e7ddd0;
+  border-radius: 22px;
+  box-shadow: 0 20px 46px rgba(17, 20, 31, 0.08);
+  padding: 32px;
+}
+
+.booking-flow-card h1 {
+  margin-top: 14px;
+  margin-bottom: 8px;
+  font-family: var(--font-display), serif;
+  font-size: clamp(34px, 5vw, 50px);
+  color: #1f2937;
+}
+
+.booking-flow-subtitle {
+  margin: 0 0 24px;
+  color: #5f6670;
+}
+
+.booking-flow-room {
+  border: 1px solid #e9dece;
+  background: #fffaf2;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.booking-flow-room h2 {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.booking-flow-room p {
+  margin: 0;
+  font-weight: 700;
+  color: #314354;
+}
+
+.booking-flow-form label {
+  display: block;
+  font-size: 13px;
+  color: #51606e;
+}
+
+.booking-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.booking-flow-form input,
+.booking-flow-form textarea {
+  width: 100%;
+  margin-top: 6px;
+  border: 1px solid #d7dce2;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.booking-flow-notes {
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+.booking-flow-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.booking-flow-submit {
+  border: none;
+  cursor: pointer;
+}
+
+.payment-demo-summary {
+  border: 1px solid #e9dece;
+  background: #fffcf8;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 14px;
+}
+
+.payment-demo-summary p {
+  margin: 0 0 6px;
+}
+
+.payment-demo-summary p:last-child {
+  margin-bottom: 0;
+}
+
+.payment-demo-methods {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.payment-demo-methods label {
+  border: 1px solid #dde2e8;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #2f3a47;
+}
+
 @media (max-width: 900px) {
   .availability-demo-summary {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1443,5 +1579,17 @@ nav {
   .availability-demo-secondary,
   .availability-demo-primary {
     justify-content: center;
+  }
+
+  .booking-flow-card {
+    padding: 20px;
+  }
+
+  .booking-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-flow-actions {
+    flex-direction: column-reverse;
   }
 }

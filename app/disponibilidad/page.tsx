@@ -1,19 +1,38 @@
 import Link from "next/link";
 
-const BOOKING_HOTEL_URL = "https://www.booking.com/hotel/es/estudios-los-arcos.es.html";
-const BOOKING_AVAILABILITY_ANCHOR = "group_recommendation";
-
-function buildBookingAvailabilityUrl(params: URLSearchParams) {
-  const query = params.toString();
-  return `${BOOKING_HOTEL_URL}${query ? `?${query}` : ""}#${BOOKING_AVAILABILITY_ANCHOR}`;
-}
-
 function formatDate(value: string) {
   if (!value) return "Sin fecha";
   const [y, m, d] = value.split("-");
   const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
   return `${parseInt(d, 10)} ${months[parseInt(m, 10) - 1]} ${y}`;
 }
+
+const DEMO_ROOMS = [
+  {
+    id: "doble",
+    name: "Habitación Doble",
+    price: "76,00€ / noche",
+    status: "Disponible",
+    statusClass: "available",
+    meta: "Incluye WiFi gratis y cancelación flexible",
+  },
+  {
+    id: "estudio",
+    name: "Apartamento Estudio",
+    price: "84,00€ / noche",
+    status: "Disponible",
+    statusClass: "available",
+    meta: "Más reservado hoy por parejas",
+  },
+  {
+    id: "familiar",
+    name: "Habitación Familiar",
+    price: "92,00€ / noche",
+    status: "Quedan pocas unidades",
+    statusClass: "few-left",
+    meta: "Ideal para familias de hasta 4 personas",
+  },
+] as const;
 
 type PageSearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -36,7 +55,6 @@ export default async function DisponibilidadPage({
   const adults = Number(params.get("group_adults") ?? 2);
   const children = Number(params.get("group_children") ?? 0);
   const rooms = Number(params.get("no_rooms") ?? 1);
-  const bookingUrl = buildBookingAvailabilityUrl(params);
 
   return (
     <main className="availability-demo-page">
@@ -79,41 +97,34 @@ export default async function DisponibilidadPage({
         </div>
 
         <div className="availability-demo-grid">
-          <article className="availability-demo-room">
-            <h2>Habitación Doble</h2>
-            <p className="availability-demo-status available">Disponible</p>
-            <p className="availability-demo-price">
-              <span>Precio estimado desde</span> 76,00€ / noche
-            </p>
-            <p className="availability-demo-meta">Incluye WiFi gratis y cancelación flexible</p>
-          </article>
-
-          <article className="availability-demo-room">
-            <h2>Apartamento Estudio</h2>
-            <p className="availability-demo-status available">Disponible</p>
-            <p className="availability-demo-price">
-              <span>Precio estimado desde</span> 84,00€ / noche
-            </p>
-            <p className="availability-demo-meta">Más reservado hoy por parejas</p>
-          </article>
-
-          <article className="availability-demo-room">
-            <h2>Habitación Familiar</h2>
-            <p className="availability-demo-status few-left">Quedan pocas unidades</p>
-            <p className="availability-demo-price">
-              <span>Precio estimado desde</span> 92,00€ / noche
-            </p>
-            <p className="availability-demo-meta">Ideal para familias de hasta 4 personas</p>
-          </article>
+          {DEMO_ROOMS.map((room) => (
+            <article className="availability-demo-room" key={room.id}>
+              <h2>{room.name}</h2>
+              <p className={`availability-demo-status ${room.statusClass}`}>{room.status}</p>
+              <p className="availability-demo-price">
+                <span>Precio estimado desde</span> {room.price}
+              </p>
+              <p className="availability-demo-meta">{room.meta}</p>
+              <form action="/reserva" method="get" className="availability-select-form">
+                {Array.from(params.entries()).map(([key, value]) => (
+                  <input key={`${room.id}-${key}`} type="hidden" name={key} value={value} />
+                ))}
+                <input type="hidden" name="room_id" value={room.id} />
+                <input type="hidden" name="room_name" value={room.name} />
+                <input type="hidden" name="room_price" value={room.price} />
+                <button type="submit" className="availability-select-btn">
+                  Seleccionar apartamento
+                </button>
+              </form>
+            </article>
+          ))}
         </div>
 
         <div className="availability-demo-actions">
           <Link href="/" className="availability-demo-secondary">
             Modificar búsqueda
           </Link>
-          <a href={bookingUrl} className="availability-demo-primary" target="_blank" rel="noreferrer">
-            Continuar en Booking
-          </a>
+          <span className="availability-demo-primary is-disabled">Paso 2: Datos de reserva</span>
         </div>
       </section>
     </main>
