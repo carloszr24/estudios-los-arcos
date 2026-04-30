@@ -5,6 +5,11 @@ import { use, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type PageSearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+const ROOM_OPTIONS = [
+  { id: "doble", name: "Habitación Doble", price: "76,00€ / noche" },
+  { id: "estudio", name: "Apartamento Estudio", price: "84,00€ / noche" },
+  { id: "familiar", name: "Habitación Familiar", price: "92,00€ / noche" },
+] as const;
 
 function getParam(value: string | string[] | undefined, fallback = "") {
   if (typeof value === "string") return value;
@@ -21,8 +26,10 @@ export default function PagoPage({
   const [isProcessing, setIsProcessing] = useState(false);
 
   const { roomName, roomPrice, guestName, guestEmail, checkin, checkout, confirmationQuery } = useMemo(() => {
-    const roomName = getParam(params.room_name, "Apartamento Estudio");
-    const roomPrice = getParam(params.room_price, "84,00€ / noche");
+    const selectedRoomId = getParam(params.room_id, "estudio");
+    const selectedRoom = ROOM_OPTIONS.find((room) => room.id === selectedRoomId) ?? ROOM_OPTIONS[1];
+    const roomName = selectedRoom.name;
+    const roomPrice = selectedRoom.price;
     const guestName = getParam(params.guest_name, "Cliente");
     const guestEmail = getParam(params.guest_email, "cliente@email.com");
     const checkin = getParam(params.checkin);

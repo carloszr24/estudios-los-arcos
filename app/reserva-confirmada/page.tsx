@@ -1,6 +1,11 @@
 import Link from "next/link";
 
 type PageSearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+const ROOM_OPTIONS = [
+  { id: "doble", name: "Habitación Doble" },
+  { id: "estudio", name: "Apartamento Estudio" },
+  { id: "familiar", name: "Habitación Familiar" },
+] as const;
 
 function getParam(value: string | string[] | undefined, fallback = "") {
   if (typeof value === "string") return value;
@@ -13,7 +18,8 @@ export default async function ReservaConfirmadaPage({
   searchParams: PageSearchParams;
 }) {
   const params = await searchParams;
-  const roomName = getParam(params.room_name, "Apartamento Estudio");
+  const selectedRoomId = getParam(params.room_id, "estudio");
+  const roomName = ROOM_OPTIONS.find((room) => room.id === selectedRoomId)?.name ?? "Apartamento Estudio";
   const checkin = getParam(params.checkin, "sin fecha");
   const checkout = getParam(params.checkout, "sin fecha");
   const guestName = getParam(params.guest_name, "Huésped");

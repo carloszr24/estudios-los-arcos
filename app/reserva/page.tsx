@@ -1,6 +1,11 @@
 import Link from "next/link";
 
 type PageSearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
+const ROOM_OPTIONS = [
+  { id: "doble", name: "Habitación Doble", price: "76,00€ / noche", meta: "Cama doble y baño privado" },
+  { id: "estudio", name: "Apartamento Estudio", price: "84,00€ / noche", meta: "Cocina privada y vistas" },
+  { id: "familiar", name: "Habitación Familiar", price: "92,00€ / noche", meta: "Ideal para familias de hasta 4 personas" },
+] as const;
 
 function getParam(value: string | string[] | undefined, fallback = "") {
   if (typeof value === "string") return value;
@@ -13,8 +18,11 @@ export default async function ReservaPage({
   searchParams: PageSearchParams;
 }) {
   const params = await searchParams;
-  const roomName = getParam(params.room_name, "Apartamento Estudio");
-  const roomPrice = getParam(params.room_price, "84,00€ / noche");
+  const requestedRoomId = getParam(params.room_id, "");
+  const selectedRoom =
+    ROOM_OPTIONS.find((room) => room.id === requestedRoomId) ??
+    ROOM_OPTIONS.find((room) => room.name === getParam(params.room_name, "")) ??
+    ROOM_OPTIONS[1];
   const checkin = getParam(params.checkin);
   const checkout = getParam(params.checkout);
   const adults = getParam(params.group_adults, "2");
@@ -28,12 +36,18 @@ export default async function ReservaPage({
         <h1>Completa tu reserva</h1>
         <p className="booking-flow-subtitle">Rellena tus datos para continuar al pago seguro.</p>
 
-        <div className="booking-flow-room">
-          <h2>{roomName}</h2>
-          <p>{roomPrice}</p>
-        </div>
-
         <form action="/pago" method="get" className="booking-flow-form">
+          <div className="booking-room-options" role="radiogroup" aria-label="Selecciona apartamento">
+            {ROOM_OPTIONS.map((room) => (
+              <label className="booking-room-option" key={room.id}>
+                <input type="radio" name="room_id" value={room.id} defaultChecked={room.id === selectedRoom.id} />
+                <span className="booking-room-option-name">{room.name}</span>
+                <span className="booking-room-option-price">{room.price}</span>
+                <span className="booking-room-option-meta">{room.meta}</span>
+              </label>
+            ))}
+          </div>
+
           <div className="booking-form-grid">
             <label>
               Nombre completo
@@ -78,9 +92,6 @@ export default async function ReservaPage({
               className="booking-flow-notes"
             />
           </label>
-
-          <input type="hidden" name="room_name" value={roomName} />
-          <input type="hidden" name="room_price" value={roomPrice} />
 
           <div className="booking-flow-actions">
             <Link href="/disponibilidad" className="availability-demo-secondary">
