@@ -4,8 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 const BOOKING_HOTEL_URL = "https://www.booking.com/hotel/es/estudios-los-arcos.es.html";
-const BOOKING_AVAILABILITY_ANCHOR = "group_recommendation";
 const BOOKING_DEST_ID = "-404164";
+const BOOKING_DEFAULT_DAYS = 2;
+const DEMO_AVAILABILITY_PATH = "/disponibilidad";
 const HERO_SLIDES = [
   {
     src: "/images/entrada-los-arcos.png",
@@ -181,6 +182,24 @@ function formatDate(value: string) {
   return `${parseInt(d, 10)} ${months[parseInt(m, 10) - 1]} ${y}`;
 }
 
+function formatDateForInput(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function addDays(date: Date, days: number) {
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}
+
+function buildDemoAvailabilityUrl(params: URLSearchParams) {
+  const query = params.toString();
+  return `${DEMO_AVAILABILITY_PATH}${query ? `?${query}` : ""}`;
+}
+
 export default function Home() {
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
@@ -195,6 +214,25 @@ export default function Home() {
   const [teruelSlideIndex, setTeruelSlideIndex] = useState(0);
   const guestsPanelRef = useRef<HTMLDivElement>(null);
   const carouselReviewPages = [...reviewPages, ...reviewPages, ...reviewPages];
+  const quickAvailabilityParams = new URLSearchParams({
+    lang: "es",
+    selected_currency: "EUR",
+    do_availability_check: "1",
+    hp_avform: "1",
+    hp_group_set: "0",
+    origin: "hp",
+    src: "hotel",
+    type: "total",
+    sb_price_type: "total",
+    dest_id: BOOKING_DEST_ID,
+    dest_type: "city",
+    checkin: formatDateForInput(new Date()),
+    checkout: formatDateForInput(addDays(new Date(), BOOKING_DEFAULT_DAYS)),
+    group_adults: String(adults),
+    group_children: String(children),
+    no_rooms: String(rooms),
+  });
+  const quickAvailabilityUrl = buildDemoAvailabilityUrl(quickAvailabilityParams);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -228,9 +266,18 @@ export default function Home() {
       }
     });
 
-    const bookingUrl = `${BOOKING_HOTEL_URL}?${params.toString()}#${BOOKING_AVAILABILITY_ANCHOR}`;
-    const bookingWindow = window.open(bookingUrl, "_blank");
-    if (bookingWindow) bookingWindow.opener = null;
+    const checkin = params.get("checkin");
+    const checkout = params.get("checkout");
+
+    if (!checkin) {
+      params.set("checkin", formatDateForInput(new Date()));
+    }
+    if (!checkout) {
+      params.set("checkout", formatDateForInput(addDays(new Date(), BOOKING_DEFAULT_DAYS)));
+    }
+
+    const availabilityDemoUrl = buildDemoAvailabilityUrl(params);
+    window.location.assign(availabilityDemoUrl);
   };
 
   useEffect(() => {
@@ -510,7 +557,7 @@ export default function Home() {
                   <li>Zona de comedor</li>
                   <li>Apartamento privado en edificio</li>
                 </ul>
-                <a href={BOOKING_HOTEL_URL} className="btn-card" target="_blank" rel="noreferrer">
+                <a href={quickAvailabilityUrl} className="btn-card">
                   Comprobar disponibilidad
                 </a>
               </div>
