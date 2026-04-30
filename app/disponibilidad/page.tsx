@@ -1,8 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { useMemo } from "react";
-import { useSearchParams } from "next/navigation";
 
 const BOOKING_HOTEL_URL = "https://www.booking.com/hotel/es/estudios-los-arcos.es.html";
 const BOOKING_AVAILABILITY_ANCHOR = "group_recommendation";
@@ -19,20 +15,28 @@ function formatDate(value: string) {
   return `${parseInt(d, 10)} ${months[parseInt(m, 10) - 1]} ${y}`;
 }
 
-export default function DisponibilidadPage() {
-  const searchParams = useSearchParams();
+type PageSearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
-  const { bookingUrl, checkin, checkout, adults, children, rooms } = useMemo(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    const checkin = params.get("checkin") ?? "";
-    const checkout = params.get("checkout") ?? "";
-    const adults = Number(params.get("group_adults") ?? 2);
-    const children = Number(params.get("group_children") ?? 0);
-    const rooms = Number(params.get("no_rooms") ?? 1);
+export default async function DisponibilidadPage({
+  searchParams,
+}: {
+  searchParams: PageSearchParams;
+}) {
+  const resolvedSearchParams = await searchParams;
+  const params = new URLSearchParams();
 
-    const bookingUrl = buildBookingAvailabilityUrl(params);
-    return { bookingUrl, checkin, checkout, adults, children, rooms };
-  }, [searchParams]);
+  Object.entries(resolvedSearchParams).forEach(([key, value]) => {
+    if (typeof value === "string") {
+      params.set(key, value);
+    }
+  });
+
+  const checkin = params.get("checkin") ?? "";
+  const checkout = params.get("checkout") ?? "";
+  const adults = Number(params.get("group_adults") ?? 2);
+  const children = Number(params.get("group_children") ?? 0);
+  const rooms = Number(params.get("no_rooms") ?? 1);
+  const bookingUrl = buildBookingAvailabilityUrl(params);
 
   return (
     <main className="availability-demo-page">
