@@ -1520,6 +1520,11 @@ nav {
   cursor: pointer;
 }
 
+.booking-flow-submit:disabled {
+  opacity: 0.75;
+  cursor: wait;
+}
+
 .payment-demo-summary {
   border: 1px solid #e9dece;
   background: #fffcf8;
@@ -1547,6 +1552,10 @@ nav {
   border-radius: 10px;
   padding: 10px 12px;
   color: #2f3a47;
+}
+
+.confirmation-card {
+  max-width: 760px;
 }
 
 @media (max-width: 900px) {

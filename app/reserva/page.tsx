@@ -26,14 +26,14 @@ export default async function ReservaPage({
       <section className="booking-flow-card">
         <p className="availability-demo-badge">Paso 2 de 3</p>
         <h1>Completa tu reserva</h1>
-        <p className="booking-flow-subtitle">Rellena los datos para continuar al pago ficticio de la demo.</p>
+        <p className="booking-flow-subtitle">Rellena tus datos para continuar al pago seguro.</p>
 
         <div className="booking-flow-room">
           <h2>{roomName}</h2>
           <p>{roomPrice}</p>
         </div>
 
-        <form action="/pago-demo" method="get" className="booking-flow-form">
+        <form action="/pago" method="get" className="booking-flow-form">
           <div className="booking-form-grid">
             <label>
               Nombre completo
@@ -70,7 +70,7 @@ export default async function ReservaPage({
           </div>
 
           <label>
-            Peticiones especiales (demo)
+            Peticiones especiales
             <textarea
               name="notes"
               rows={4}
@@ -87,7 +87,7 @@ export default async function ReservaPage({
               Volver a disponibilidad
             </Link>
             <button type="submit" className="availability-demo-primary booking-flow-submit">
-              Ir al pago ficticio
+              Ir al pago
             </button>
           </div>
         </form>

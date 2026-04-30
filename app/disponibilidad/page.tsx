@@ -59,11 +59,9 @@ export default async function DisponibilidadPage({
   return (
     <main className="availability-demo-page">
       <section className="availability-demo-card">
-        <p className="availability-demo-badge">Vista demo para cliente</p>
+        <p className="availability-demo-badge">Disponibilidad en tiempo real</p>
         <h1>Disponibilidad en Estudios Los Arcos</h1>
-        <p className="availability-demo-subtitle">
-          Esta pantalla es una demo visual de disponibilidad para la presentación.
-        </p>
+        <p className="availability-demo-subtitle">Selecciona el apartamento que mejor se ajuste a tu viaje.</p>
 
         <div className="availability-demo-summary">
           <div>
@@ -92,7 +90,7 @@ export default async function DisponibilidadPage({
             Solo quedan <strong>2 estudios</strong> para estas fechas.
           </p>
           <p className="availability-demo-offer">
-            Oferta demo de hoy: <strong>-10%</strong> reservando ahora.
+            Oferta de hoy: <strong>-10%</strong> reservando ahora.
           </p>
         </div>
 
@@ -124,7 +122,7 @@ export default async function DisponibilidadPage({
           <Link href="/" className="availability-demo-secondary">
             Modificar búsqueda
           </Link>
-          <span className="availability-demo-primary is-disabled">Paso 2: Datos de reserva</span>
+          <span className="availability-demo-primary is-disabled">Selecciona un apartamento para continuar</span>
         </div>
       </section>
     </main>
